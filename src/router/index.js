@@ -20,7 +20,15 @@ export default new Router({
     {
       path: '/layout',
       name: 'layout',
-      component: Layout
+      component: Layout,
+      redirect: '/layout/achievements',
+      children: [
+        {
+          path: 'achievements',
+          name: 'achievements',
+          component: Achievements
+        }
+      ]
     }
   ]
 })

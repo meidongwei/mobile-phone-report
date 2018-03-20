@@ -8,7 +8,7 @@
       <input type="text" v-model="password" placeholder="密码">
     </div>
     <div class="btn-box">
-      <button @click="handleLogin" class="btn">登录</button>
+      <button @click="handleLogin" class="btn btn-primary">登录</button>
     </div>
   </div>
 </template>
@@ -40,22 +40,6 @@ export default {
     justify-content: center;
     align-items: center;
   }
-  .btn {
-    border: none;
-    display: block;
-    padding: 10px 20px;
-    background-color: #a581ff;
-    width: 80%;
-    color: #fff;
-    border-radius: 3px;
-  }
-  .btn:active {
-    background-color: #8161d2;
-  }
-  .btn-box {
-    display: flex;
-    justify-content: center;
-  }
   .form-con {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -65,5 +49,12 @@ export default {
     padding: 15px 20px;
     width: 100%;
     border: none;
+  }
+  .btn-box {
+    display: flex;
+    justify-content: center;
+  }
+  .btn-box .btn {
+    width: 80%;
   }
 </style>

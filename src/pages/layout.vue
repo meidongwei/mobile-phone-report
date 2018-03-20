@@ -57,6 +57,11 @@ export default {
 </script>
 
 <style>
+  .segment {
+    padding: 15px;
+    background-color: #fff;
+    margin-bottom: 15px;
+  }
   .menuBar {
     position: fixed;
     bottom: 0;
