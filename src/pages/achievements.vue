@@ -48,70 +48,142 @@
     </div>
     <div class="segment">
       <div class="tab">
-        <button class="btn active">营业实收</button>
-        <button class="btn">就餐人数</button>
+        <button class="btn" :class="{active:index === num}"
+          v-for="(item, index) in tabs"
+          @click="handleChangeChart(index)">
+          {{ item }}
+        </button>
       </div>
-      <div id="myChart" :style="{width: '100%', height: '300px'}"></div>
+      <div style="width:100%;height:300px;"
+        v-for="(item, index) in tabContents"
+        :id="item.id" v-show="index === num"></div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      tabs: ['营业实收', '就餐人数'],
+      tabContents: [
+        {
+          id: 'realIncome',
+        },
+        {
+          id: 'numberOfPeople'
+        }
+      ],
+      num: 0
+    }
+  },
+  computed: {
+    // 初始化 chart 之后,
+    // 获取屏幕宽度赋值给 chart 的宽度
+    screenWidth () {
+      return window.innerWidth - 30
+    }
+  },
   mounted () {
-    this.drawLine()
+    this.showRealIncome()
   },
   methods: {
-    drawLine () {
-      let myChart = this.$echarts.init(document.getElementById('myChart'))
+    handleChangeChart (index) {
+      this.num = index
+      if (index === 1) {
+        this.showNumberOfPeople()
+      } else {
+        this.showRealIncome()
+      }
+    },
+    showRealIncome () {
+      let myChartObj = document.getElementById('realIncome')
+      let myChart = this.$echarts.init(myChartObj)
+      myChart.resize({
+        width: this.screenWidth
+      })
       myChart.setOption({
-        title: {
-          text: '单位:万元',
-          textStyle: {
-            color: '#aaaaaa',
-            fontSize: 14,
-            fontWeight: 'normal'
-          }
-        },
         tooltip: {
-         trigger: 'axis'
+          trigger: 'axis' // 触发类型
         },
         legend: {
-          right: '0',
-          data:['去年完成','今年计划','今年完成']
+          right: '0'
         },
         grid: {
-          top: '39px',
+          top: '33px',
           left: '0',
-          right: '3%',
-          bottom: '2%',
-          containLabel: true
+          right: '10',
+          bottom: '0',
+          containLabel: true // 是否包含坐标轴的刻度标签
         },
         xAxis: {
-          type: 'category',
-          boundaryGap: false,
-          data: ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"]
+          type: 'category', // 坐标轴类型
+          boundaryGap: false, // 坐标轴两边留白策略
+          axisLabel:{
+            interval:0, // 横轴信息全部显示
+          }
         },
         yAxis: {
-          type: 'value'
+          name: '单位:万元'
         },
         series: [
-          {
-            name: '去年完成',
-            type: 'line',
-            data: [125, 250, 590, 750, 580, 750, 600, 528, 522, 528, 600, 700]
-          },
-          {
-            name: '今年计划',
-            type: 'line',
-            data: [35, 130, 280, 250, 380, 430, 400, 328, 422, 328, 290, 100]
-          },
-          {
-            name: '今年完成',
-            type: 'line',
-            data: [15, 30, 100, 220, 280, 250, 290, 228, 222, 108, 20, 0]
+          { type: 'line' },
+          { type: 'line' },
+          { type: 'line' }
+        ],
+        dataset: {
+          source: {
+            "value": ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+            "去年完成": [125, 250, 590, 750, 580, 750, 600, 528, 522, 528, 600, 700],
+            "今年计划": [35, 130, 280, 250, 380, 430, 400, 328, 422, 328, 290, 100],
+            "今年完成": [15, 30, 100, 220, 280, 250, 290, 228, 222, 108, 20, 0]
           }
-        ]
+        }
+      })
+    },
+    showNumberOfPeople () {
+      let myChartObj = document.getElementById('numberOfPeople')
+      let myChart = this.$echarts.init(myChartObj)
+      myChart.resize({
+        width: this.screenWidth
+      })
+      myChart.setOption({
+        tooltip: {
+          trigger: 'axis' // 触发类型
+        },
+        legend: {
+          right: '0'
+        },
+        grid: {
+          top: '33px',
+          left: '0',
+          right: '10',
+          bottom: '0',
+          containLabel: true // 是否包含坐标轴的刻度标签
+        },
+        xAxis: {
+          type: 'category', // 坐标轴类型
+          boundaryGap: false, // 坐标轴两边留白策略
+          axisLabel:{
+            interval:0, // 横轴信息全部显示
+          }
+        },
+        yAxis: {
+          name: '单位:人'
+        },
+        series: [
+          { type: 'line' },
+          { type: 'line' },
+          { type: 'line' }
+        ],
+        dataset: {
+          source: {
+            "value": ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+            "去年完成": [125, 250, 8000, 9000, 9807, 9960, 12000, 9998, 8009, 528, 600, 700],
+            "今年计划": [35, 130, 280, 2500, 3800, 4030, 4000, 3028, 4202, 3028, 290, 100],
+            "今年完成": [15, 30, 1010, 2020, 2800, 2050, 2900, 2208, 202, 1008, 20, 0]
+          }
+        }
       })
     }
   }
