@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 1000px;">
+  <div style="padding-bottom:100px;">
     <div class="header">
       <div class="header-top">
         中餐1店
@@ -8,7 +8,7 @@
         年总汇
       </div>
     </div>
-    <div class="segment showData">
+    <div class="segment showColorData">
       <div class="cell cell-1">
         <div>
           <h2>81190.<small>23</small></h2>
@@ -58,6 +58,228 @@
         v-for="(item, index) in tabContents"
         :id="item.id" v-show="index === num"></div>
     </div>
+    <h4 class="page-header">营业详情</h4>
+    <div class="segment" style="padding:0;">
+      <table class="table">
+        <tr>
+          <td>
+            <h2>77305.24</h2>
+            <p>收款(元)</p>
+          </td>
+          <td>
+            <h2>35464.87</h2>
+            <p>优免(元)</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h2>324</h2>
+            <p>堂食桌数</p>
+          </td>
+          <td>
+            <h2>1598</h2>
+            <p>堂食客流</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h2>304.86</h2>
+            <p>堂食桌均(元)</p>
+          </td>
+          <td>
+            <h2>1598</h2>
+            <p>堂食人均(元)</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h2>4.78%</h2>
+            <p>开台率</p>
+          </td>
+          <td>
+            <h2>3.62%</h2>
+            <p>上座率</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h2>20.23%</h2>
+            <p>人效(元)</p>
+          </td>
+          <td>
+            <h2>0.55%</h2>
+            <p>坪效(元)</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h2>53</h2>
+            <p>外卖单数</p>
+          </td>
+          <td>
+            <h2>0.06</h2>
+            <p>外卖单均</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <h4 class="page-header">客人自助</h4>
+    <div class="segment" style="padding:0;">
+      <table class="table">
+        <tr>
+          <td>
+            <h2>0</h2>
+            <p>自助点单量</p>
+          </td>
+          <td>
+            <h2>0.00%</h2>
+            <p>自助点单率</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h2>2</h2>
+            <p>自助结账量</p>
+          </td>
+          <td>
+            <h2>0.57%</h2>
+            <p>自助结账率</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <h4 class="page-header">异常监控</h4>
+    <div class="segment" style="padding:0;">
+      <table class="table">
+        <tr>
+          <td>
+            <h2>6895.63</h2>
+            <p>退菜金额(元)</p>
+          </td>
+          <td>
+            <h2>3887.78</h2>
+            <p>赠菜金额(元)</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h2>3</h2>
+            <p>沽清菜品</p>
+          </td>
+          <td>
+            <h2>89</h2>
+            <p>反结单数</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <h4 class="page-header page-header-icon">
+      菜品四象限
+      <a href="javascript:;" class="setting">
+        <img src="@/assets/set.png" alt="setting">
+      </a>
+    </h4>
+    <div class="segment" style="padding:0;">
+      <table class="table">
+        <tr>
+          <td>
+            <h2>1</h2>
+            <p>问题菜品</p>
+          </td>
+          <td>
+            <h2>1</h2>
+            <p>明星菜品</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h2>161</h2>
+            <p>瘦狗菜品</p>
+          </td>
+          <td>
+            <h2>2</h2>
+            <p>金牛菜品</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <h4 class="page-header">菜品分析</h4>
+    <div class="segment" style="padding:0;">
+      <table class="table">
+        <tr>
+          <td>
+            <h2>10</h2>
+            <p>受欢迎菜品</p>
+          </td>
+          <td>
+            <h2>10</h2>
+            <p>滞销菜品</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <h4 class="page-header">客人构成</h4>
+    <div class="segment" style="padding:0;">
+      <table class="table">
+        <tr>
+          <td>
+            <h2>79.96%</h2>
+            <p>普客订单</p>
+          </td>
+          <td>
+            <h2>20.04%</h2>
+            <p>会员订单</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h2>57.03%</h2>
+            <p>普客金额</p>
+          </td>
+          <td>
+            <h2>42.97%</h2>
+            <p>会员金额</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <h4 class="page-header">业务构成</h4>
+    <div class="segment" style="padding:0;">
+      <table class="table">
+        <tr>
+          <td>
+            <h2>86.91%</h2>
+            <p>堂食订单</p>
+          </td>
+          <td>
+            <h2>13.09%</h2>
+            <p>外卖订单</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h2>100.00%</h2>
+            <p>堂食金额</p>
+          </td>
+          <td>
+            <h2>0.00%</h2>
+            <p>外卖金额</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+
+
+
+
+
   </div>
 </template>
 
@@ -191,11 +413,12 @@ export default {
 </script>
 
 <style scoped>
+  /* 头部样式 */
   .header {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 999;
+    z-index: 99999999;
   }
   .header-top,
   .header-bottom {
@@ -210,13 +433,15 @@ export default {
   .header-bottom {
     background-color: #e6e6e6;
   }
-  .showData {
+  /* 彩色数据模块样式 */
+  .showColorData {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
     margin-top: 80px;
     padding-bottom: 7px;
   }
+  /* 单元格样式 */
   .cell {
     height: 100px;
     width: 49%;
@@ -241,7 +466,7 @@ export default {
   .cell-5,
   .cell-6 {
     background-color: #f2f2f2;
-    color: #000000;
+    color: #282828;
   }
   .cell > div {
     text-align: center;
@@ -257,6 +482,49 @@ export default {
     display: flex;
     margin-bottom: 20px;
   }
-  .tab .btn {
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .table tr td {
+    width: 50%;
+    height: 100px;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+  }
+  .table tr td::after {
+    content: '';
+    height: 200%;
+    width: 200%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    transform: scale(.5);
+    -webkit-transform: scale(.5);
+    transform-origin: 0 0;
+    -webkit-transform: 0 0;
+  }
+  .table tr td:nth-child(even)::after {
+    border-right: none;
+  }
+  .table tr:nth-of-type(1) td::after {
+    border-top: 1px solid #ddd;
+  }
+  .table h2 {
+    color: #3d3d3d;
+    font-weight: normal;
+  }
+  .table p {
+    color: #ababab;
+    font-size: 14px;
+  }
+  .setting {
+    height: 22px;
+  }
+  .setting img {
+    height: 100%;
   }
 </style>

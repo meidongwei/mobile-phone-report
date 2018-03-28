@@ -57,11 +57,29 @@ export default {
 </script>
 
 <style>
+  /* 区域块样式 */
   .segment {
     padding: 15px;
     background-color: #fff;
     margin-bottom: 15px;
   }
+  /* 区域块标题样式 */
+  .page-header {
+    border-left: 3px solid #20ae93;
+    padding-left: 8px;
+    margin-left: 15px;
+    margin-bottom: 8px;
+    font-weight: normal;
+    color: #8c8c8c;
+  }
+  .page-header-icon {
+    display: flex;
+    justify-content: space-between;
+  }
+  .page-header-icon .setting {
+    margin-right: 15px;
+  }
+  /* 按钮导航条样式 */
   .menuBar {
     position: fixed;
     bottom: 0;
@@ -69,6 +87,8 @@ export default {
     background-color: #fff;
     height: 50px;
     display: flex;
+    border-top: 1px solid #f5f5f5;
+    z-index: 99999999;
   }
   .menu {
     flex: 1;
@@ -81,6 +101,6 @@ export default {
     margin: 8px 0 4px 0;
   }
   .menu > span {
-    font-size: 5px;
+    font-size: 12px;
   }
 </style>
