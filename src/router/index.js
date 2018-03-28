@@ -2,7 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/pages/login'
 import Layout from '@/pages/layout'
-import Achievements from '@/pages/achievements'
+import Jixiao from '@/pages/jixiao'
+import Baobiao from '@/pages/baobiao'
+import Yonghu from '@/pages/yonghu'
 
 Vue.use(Router)
 
@@ -21,12 +23,22 @@ export default new Router({
       path: '/layout',
       name: 'layout',
       component: Layout,
-      redirect: '/layout/achievements',
+      redirect: '/layout/jixiao',
       children: [
         {
-          path: 'achievements',
-          name: 'achievements',
-          component: Achievements
+          path: 'jixiao',
+          name: 'jixiao',
+          component: Jixiao
+        },
+        {
+          path: 'baobiao',
+          name: 'baobiao',
+          component: Baobiao
+        },
+        {
+          path: 'yonghu',
+          name: 'yonghu',
+          component: Yonghu
         }
       ]
     }

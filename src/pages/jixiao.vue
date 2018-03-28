@@ -482,49 +482,4 @@ export default {
     display: flex;
     margin-bottom: 20px;
   }
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  .table tr td {
-    width: 50%;
-    height: 100px;
-    text-align: center;
-    vertical-align: middle;
-    position: relative;
-  }
-  .table tr td::after {
-    content: '';
-    height: 200%;
-    width: 200%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-bottom: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    transform: scale(.5);
-    -webkit-transform: scale(.5);
-    transform-origin: 0 0;
-    -webkit-transform: 0 0;
-  }
-  .table tr td:nth-child(even)::after {
-    border-right: none;
-  }
-  .table tr:nth-of-type(1) td::after {
-    border-top: 1px solid #ddd;
-  }
-  .table h2 {
-    color: #3d3d3d;
-    font-weight: normal;
-  }
-  .table p {
-    color: #ababab;
-    font-size: 14px;
-  }
-  .setting {
-    height: 22px;
-  }
-  .setting img {
-    height: 100%;
-  }
 </style>

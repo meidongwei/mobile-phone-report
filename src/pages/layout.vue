@@ -34,8 +34,8 @@ export default {
         {
           id: 3,
           name: '当前用户',
-          val: 'geren',
-          imgUrl: require('../assets/geren2.svg'),
+          val: 'yonghu',
+          imgUrl: require('../assets/yonghu2.svg'),
           color: '#ababab'
         }
       ]
@@ -49,6 +49,8 @@ export default {
         if (this.menuBarList[i].id === index + 1) {
           this.menuBarList[i].imgUrl = require('../assets/'+ this.menuBarList[i].val +'1.svg')
           this.menuBarList[i].color = '#20ae93'
+
+          this.$router.push({ name: this.menuBarList[i].val })
         }
       }
     }
@@ -75,9 +77,14 @@ export default {
   .page-header-icon {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
-  .page-header-icon .setting {
+  .setting {
     margin-right: 15px;
+    height: 18px;
+  }
+  .setting img {
+    height: 100%;
   }
   /* 按钮导航条样式 */
   .menuBar {
@@ -102,5 +109,44 @@ export default {
   }
   .menu > span {
     font-size: 12px;
+  }
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .table tr td {
+    width: 50%;
+    height: 100px;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+  }
+  .table tr td::after {
+    content: '';
+    height: 200%;
+    width: 200%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid #eeeeee;
+    border-right: 1px solid #eeeeee;
+    transform: scale(.5);
+    -webkit-transform: scale(.5);
+    transform-origin: 0 0;
+    -webkit-transform: 0 0;
+  }
+  .table tr:nth-of-type(1) td::after {
+    border-top: 1px solid #eeeeee;
+  }
+  .table tr td:nth-child(even)::after {
+    border-right: none;
+  }
+  .table h2 {
+    color: #3d3d3d;
+    font-weight: normal;
+  }
+  .table p {
+    color: #ababab;
+    font-size: 14px;
   }
 </style>
