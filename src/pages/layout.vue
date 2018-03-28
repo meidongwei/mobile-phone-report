@@ -2,12 +2,12 @@
   <div>
     <router-view/>
     <div class="menuBar">
-      <div v-for="(item, index) in menuBarList"
-        @click="goPage(index)" :key="item.id"
-        class="menu">
-        <img :src="item.imgUrl" alt="icon">
-        <span :style="`color: ${item.color}`">{{ item.name }}</span>
-      </div>
+      <a href="javascript:;" v-for="(item, index) in menuBarList"
+        @click="goPage(index)" :key="item.id" class="menu"
+        :class="{active: activeName === item.id}">
+        <img :src="item.img" alt="icon">
+        <span>{{ item.name }}</span>
+      </a>
     </div>
   </div>
 </template>
@@ -16,49 +16,60 @@
 export default {
   data () {
     return {
+      activeName: 1,
       menuBarList: [
         {
           id: 1,
           name: '门店绩效',
-          val: 'jixiao',
-          imgUrl: require('../assets/jixiao1.svg'),
-          color: '#20ae93'
+          url: 'jixiao',
+          img: require('../assets/jixiao1.svg')
         },
         {
           id: 2,
           name: '报表查询',
-          val: 'baobiao',
-          imgUrl: require('../assets/baobiao2.svg'),
-          color: '#ababab'
+          url: 'baobiao',
+          img: require('../assets/baobiao2.svg')
         },
         {
           id: 3,
           name: '当前用户',
-          val: 'yonghu',
-          imgUrl: require('../assets/yonghu2.svg'),
-          color: '#ababab'
+          url: 'yonghu',
+          img: require('../assets/yonghu2.svg')
         }
       ]
     }
   },
   methods: {
     goPage (index) {
+      this.$router.push({ name: this.menuBarList[index].url })
       for (let i=0;i<this.menuBarList.length;i++) {
-        this.menuBarList[i].imgUrl = require('../assets/'+ this.menuBarList[i].val +'2.svg')
-        this.menuBarList[i].color = '#ababab'
+        this.menuBarList[i].img = require('../assets/'+ this.menuBarList[i].url +'2.svg')
         if (this.menuBarList[i].id === index + 1) {
-          this.menuBarList[i].imgUrl = require('../assets/'+ this.menuBarList[i].val +'1.svg')
-          this.menuBarList[i].color = '#20ae93'
-
-          this.$router.push({ name: this.menuBarList[i].val })
+          this.menuBarList[i].img = require('../assets/'+ this.menuBarList[i].url +'1.svg')
+          this.activeName = this.menuBarList[i].id
+        }
+      }
+    },
+    // 当前页刷新后，状态不变
+    activeNameOfList () {
+      for (let i=0;i<this.menuBarList.length;i++) {
+        if (this.$route.name === this.menuBarList[i].url) {
+          this.menuBarList[i].img = require('../assets/'+ this.menuBarList[i].url +'1.svg')
+          this.activeName = this.menuBarList[i].id
         }
       }
     }
+  },
+  mounted () {
+    this.activeNameOfList()
   }
 }
 </script>
 
 <style>
+  .active span {
+    color: #20ae93;
+  }
   /* 区域块样式 */
   .segment {
     padding: 15px;
@@ -102,6 +113,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: #ababab;
   }
   .menu > img {
     height: 20px;

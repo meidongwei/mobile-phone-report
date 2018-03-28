@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-bottom:100px;">
+  <div style="padding-bottom:50px;">
     <div class="header">
       <div class="header-top">
         中餐1店
@@ -48,14 +48,14 @@
     </div>
     <div class="segment">
       <div class="tab">
-        <button class="btn" :class="{active:index === num}"
-          v-for="(item, index) in tabs"
+        <button class="btn btn-tab" :class="{active:index === num}"
+          v-for="(item, index) in tabs" :key="index"
           @click="handleChangeChart(index)">
           {{ item }}
         </button>
       </div>
       <div style="width:100%;height:300px;"
-        v-for="(item, index) in tabContents"
+        v-for="(item, index) in tabContents" :key="index"
         :id="item.id" v-show="index === num"></div>
     </div>
     <h4 class="page-header">营业详情</h4>
@@ -466,7 +466,7 @@ export default {
   .cell-5,
   .cell-6 {
     background-color: #f2f2f2;
-    color: #282828;
+    color: #525252;
   }
   .cell > div {
     text-align: center;

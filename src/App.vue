@@ -9,12 +9,23 @@ export default {
 </script>
 
 <style>
-/* 黑色#282828 */
+  /* primary色值#20ae93 */
+  /* 文字黑#525252 */
+  /* 文字灰#ababab */
+  /* html背景色#f5f5f5 */
+  /* 按钮active状态的颜色#ececec */
+
   /* 格式化样式 */
   * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+  }
+  a {
+    text-decoration: none;
+  }
+  a, button, input {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
   }
   img {
     display: block;
@@ -22,19 +33,27 @@ export default {
   body {
     background-color: #f5f5f5;
   }
+
+  /* 按钮样式 */
   .btn {
     border: none;
     display: block;
     padding: 10px 20px;
     background-color: #fff;
-    color: #606060;
+    color: #525252;
     border-radius: 3px;
-    font-size: 14px;
+    font-size: 16px;
   }
-  .btn.active {
+  .btn:active {
+    background-color: #ececec;
+  }
+  .btn-tab:active {
+    background-color: #fff;
+  }
+  .btn-tab.active {
     position: relative;
   }
-  .btn.active:after {
+  .btn-tab.active::after {
     position: absolute;
     bottom: 0;
     left: 10%;
@@ -45,9 +64,9 @@ export default {
   }
   .btn-primary {
     color: #fff;
-    background-color: #a581ff;
+    background-color: #20ae93;
   }
   .btn-primary:active {
-    background-color: #8161d2;
+    background-color: #188b75;
   }
 </style>

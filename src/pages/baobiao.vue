@@ -83,6 +83,6 @@ export default {
     width: 50px;
   }
   .table-9-cell p {
-    color: #282828;
+    color: #525252;
   }
 </style>
