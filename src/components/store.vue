@@ -135,8 +135,8 @@
       </div>
     </div>
     <a href="javascript:;"
-      class="btn btn-primary btn-store"
-      @click="handleSelectOK">确定</a>
+      class="btn btn-primary btn-fixed-bottom"
+      @click="handleSelectStoreOK">确定</a>
   </div>
 </template>
 
@@ -154,8 +154,8 @@ export default {
     }
   },
   methods: {
-    handleSelectOK () {
-      this.$emit('handleSelectOK')
+    handleSelectStoreOK () {
+      this.$emit('handleSelectStoreOK')
     }
   }
 }
@@ -171,15 +171,6 @@ export default {
     background-color: #fff;
     z-index: 999999999;
     display: flex;
-  }
-  .btn-store {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    border-radius: 0;
-    text-align: center;
-    z-index: 3;
   }
   .store-left a {
     color: #525252;

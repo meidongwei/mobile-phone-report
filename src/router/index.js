@@ -5,6 +5,7 @@ import Layout from '@/pages/layout'
 import Jixiao from '@/pages/jixiao'
 import Baobiao from '@/pages/baobiao'
 import Yonghu from '@/pages/yonghu'
+import UpdatePwd from '@/pages/updatePwd'
 
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ export default new Router({
           component: Yonghu
         }
       ]
+    },
+    {
+      path: 'updatePwd',
+      name: 'updatePwd',
+      component: UpdatePwd
     }
   ]
 })

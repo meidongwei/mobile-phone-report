@@ -72,4 +72,13 @@ export default {
   .btn-primary:active {
     background-color: #188b75;
   }
+  .btn-fixed-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0;
+    text-align: center;
+    z-index: 3;
+  }
 </style>

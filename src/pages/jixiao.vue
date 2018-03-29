@@ -3,7 +3,7 @@
     <div class="header">
       <div class="header-1">
         中餐1店
-        <a href="javascript:;" class="changeStore" @click="changeStore">
+        <a href="javascript:;" class="changeStore" @click="handleChangeStore">
           换店 <span class="list-cell-ft"></span>
         </a>
       </div>
@@ -11,7 +11,7 @@
         <div class="dateControl">
           222
         </div>
-        <div class="changeDate">
+        <div class="changeDate" @click="handleChangeDate">
           日汇总
         </div>
       </div>
@@ -284,7 +284,11 @@
     </div>
 
     <Store :isShow="isShowStore"
-      @handleSelectOK="handleSelectOK"></Store>
+      @handleSelectStoreOK="handleSelectStoreOK"></Store>
+
+    <ChangeDateComponent :isShow="isShowDateComponent"
+      @handleSelectDateOK="handleSelectDateOK">
+    </ChangeDateComponent>
 
 
 
@@ -296,12 +300,15 @@
 
 <script>
 import Store from '@/components/store'
+import ChangeDateComponent from '@/components/changeDateComponent'
 export default {
   components: {
-    Store
+    Store,
+    ChangeDateComponent
   },
   data () {
     return {
+      isShowDateComponent: false,
       isShowFixedBg: false,
       isShowStore: false,
       tabs: ['营业实收', '就餐人数'],
@@ -327,11 +334,26 @@ export default {
     this.showRealIncome()
   },
   methods: {
-    changeStore () {
+    handleChangeDate () {
+      if (this.isShowDateComponent === false) {
+        this.isShowDateComponent = true
+        this.isShowFixedBg = true
+      } else {
+        this.isShowDateComponent = false
+        this.isShowFixedBg = false
+      }
+    },
+    handleSelectDateOK () {
+      this.isShowDateComponent = false
+      this.isShowFixedBg = false
+    },
+    handleChangeStore () {
+      // 关闭日期组件 isShowDateComponent
+      this.isShowDateComponent = false
       this.isShowStore = true
       this.isShowFixedBg = true
     },
-    handleSelectOK () {
+    handleSelectStoreOK () {
       this.isShowStore = false
       this.isShowFixedBg = false
     },
@@ -502,6 +524,11 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    cursor: pointer;
+  }
+  .changeDate:active {
+    background-color: #ececec;
   }
 
   /* 彩色数据模块样式 */
