@@ -1,11 +1,19 @@
 <template>
-  <div style="padding-bottom:50px;">
+  <div style="padding-bottom:50px;" :class="{fixedBg: isShowFixedBg}">
     <div class="header">
-      <div class="header-top">
+      <div class="header-1">
         中餐1店
+        <a href="javascript:;" class="changeStore" @click="changeStore">
+          换店 <span class="list-cell-ft"></span>
+        </a>
       </div>
-      <div class="header-bottom">
-        年总汇
+      <div class="header-2">
+        <div class="dateControl">
+          222
+        </div>
+        <div class="changeDate">
+          日汇总
+        </div>
       </div>
     </div>
     <div class="segment showColorData">
@@ -275,6 +283,9 @@
       </table>
     </div>
 
+    <Store :isShow="isShowStore"
+      @handleSelectOK="handleSelectOK"></Store>
+
 
 
 
@@ -284,9 +295,15 @@
 </template>
 
 <script>
+import Store from '@/components/store'
 export default {
+  components: {
+    Store
+  },
   data () {
     return {
+      isShowFixedBg: false,
+      isShowStore: false,
       tabs: ['营业实收', '就餐人数'],
       tabContents: [
         {
@@ -310,6 +327,14 @@ export default {
     this.showRealIncome()
   },
   methods: {
+    changeStore () {
+      this.isShowStore = true
+      this.isShowFixedBg = true
+    },
+    handleSelectOK () {
+      this.isShowStore = false
+      this.isShowFixedBg = false
+    },
     handleChangeChart (index) {
       this.num = index
       if (index === 1) {
@@ -419,20 +444,66 @@ export default {
     top: 0;
     width: 100%;
     z-index: 99999999;
+    box-shadow: 1px 1px 3px #c7c7c7;
   }
-  .header-top,
-  .header-bottom {
+  .header-1,
+  .header-2 {
     height: 40px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    color: #525252;
+  }
+  .header-1 {
+    background-color: #fff;
     padding: 0 15px;
   }
-  .header-top {
-    background-color: #fff;
+  .changeStore {
+    color: #20ae93;
   }
-  .header-bottom {
-    background-color: #e6e6e6;
+  .changeStore .list-cell-ft {
+    display: flex;
+    width: 48px;
+    position: relative;
   }
+  .changeStore .list-cell-ft::after {
+    content: '';
+    display: inline-block;
+    height: 6px;
+    width: 6px;
+    border-width: 2px 2px 0 0;
+    border-color: #20ae93;
+    border-style: solid;
+    -webkit-transform: matrix(0.71, 0.71, 0.71, -0.71, 0, 0);
+    transform: matrix(0.71, 0.71, 0.71, -0.71, 0, 0);
+    position: relative;
+    top: -2px;
+    position: absolute;
+    top: 50%;
+    margin-top: -16px;
+    right: 2px;
+  }
+  .header-2 {
+    background-color: #f2f2f2;
+  }
+  .dateControl {
+    padding-left: 15px;
+    height: 100%;
+    width: 70%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-right: 1px solid #e3e3e3;
+  }
+  .changeDate {
+    padding: 0 15px;
+    height: 100%;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   /* 彩色数据模块样式 */
   .showColorData {
     display: flex;
@@ -441,6 +512,7 @@ export default {
     margin-top: 80px;
     padding-bottom: 7px;
   }
+
   /* 单元格样式 */
   .cell {
     height: 100px;
@@ -481,5 +553,9 @@ export default {
   .tab {
     display: flex;
     margin-bottom: 20px;
+  }
+  .fixedBg {
+    height: 100vh;
+    overflow: hidden;
   }
 </style>

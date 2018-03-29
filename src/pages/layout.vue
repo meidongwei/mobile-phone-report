@@ -78,12 +78,22 @@ export default {
   }
   /* 区域块标题样式 */
   .page-header {
-    border-left: 3px solid #20ae93;
     padding-left: 8px;
     margin-left: 15px;
     margin-bottom: 8px;
     font-weight: normal;
     color: #8c8c8c;
+    position: relative;
+    font-size: 14px;
+  }
+  .page-header::before {
+    content: '';
+    width: 3px;
+    height: 15px;
+    background-color: #20ae93;
+    position: absolute;
+    left: 0;
+    top: 2px;
   }
   .page-header-icon {
     display: flex;

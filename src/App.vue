@@ -24,7 +24,7 @@ export default {
   a {
     text-decoration: none;
   }
-  a, button, input {
+  a, button, input, label {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
   }
   img {
@@ -32,6 +32,9 @@ export default {
   }
   body {
     background-color: #f5f5f5;
+  }
+  li {
+    list-style: none;
   }
 
   /* 按钮样式 */
