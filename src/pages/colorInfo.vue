@@ -10,7 +10,7 @@
         </div>
       </div>
       <!-- echarts -->
-      <div style="height:300px;width:100%;background-color:#acacac;">
+      <div style="height:300px;width:100%;" id="echartId">
       </div>
     </div>
 
@@ -72,7 +72,55 @@ export default {
   methods: {
     setFixedBg (val) {
       this.isFixedBg = val
+    },
+    showSerial () {
+      let myChartObj = document.getElementById('echartId')
+      let myChart = this.$echarts.init(myChartObj)
+      myChart.resize({
+        width: this.screenWidth
+      })
+      myChart.setOption({
+        tooltip: {
+          trigger: 'axis' // 触发类型
+        },
+        legend: {
+          right: '0'
+        },
+        grid: {
+          top: '33px',
+          left: '0',
+          right: '10',
+          bottom: '0',
+          containLabel: true // 是否包含坐标轴的刻度标签
+        },
+        xAxis: {
+          type: 'category', // 坐标轴类型
+          boundaryGap: false, // 坐标轴两边留白策略
+          axisLabel:{
+            interval:0, // 横轴信息全部显示
+          }
+        },
+        yAxis: {
+          name: '单位:万元'
+        },
+        series: [
+          { type: 'line' },
+          { type: 'line' },
+          { type: 'line' }
+        ],
+        dataset: {
+          source: {
+            "value": ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+            "去年完成": [125, 250, 590, 750, 580, 750, 600, 528, 522, 528, 600, 700],
+            "今年计划": [35, 130, 280, 250, 380, 430, 400, 328, 422, 328, 290, 100],
+            "今年完成": [15, 30, 100, 220, 280, 250, 290, 228, 222, 108, 20, 0]
+          }
+        }
+      })
     }
+  },
+  mounted () {
+    this.showSerial()
   }
 }
 </script>
