@@ -6,6 +6,7 @@ import Jixiao from '@/pages/jixiao'
 import Baobiao from '@/pages/baobiao'
 import Yonghu from '@/pages/yonghu'
 import UpdatePwd from '@/pages/updatePwd'
+import ColorInfo from '@/pages/colorInfo'
 
 Vue.use(Router)
 
@@ -44,9 +45,14 @@ export default new Router({
       ]
     },
     {
-      path: 'updatePwd',
+      path: '/updatePwd',
       name: 'updatePwd',
       component: UpdatePwd
+    },
+    {
+      path: '/colorInfo',
+      name: 'colorInfo',
+      component: ColorInfo
     }
   ]
 })

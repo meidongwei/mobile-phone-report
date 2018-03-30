@@ -35,9 +35,6 @@ export default {
   }
   .dateWrapper ul li {
     padding: 10px 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: relative;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
   }

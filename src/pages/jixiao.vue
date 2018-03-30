@@ -1,23 +1,8 @@
 <template>
-  <div style="padding-bottom:50px;" :class="{fixedBg: isShowFixedBg}">
-    <div class="header">
-      <div class="header-1">
-        中餐1店
-        <a href="javascript:;" class="changeStore" @click="handleChangeStore">
-          换店 <span class="list-cell-ft"></span>
-        </a>
-      </div>
-      <div class="header-2">
-        <div class="dateControl">
-          222
-        </div>
-        <div class="changeDate" @click="handleChangeDate">
-          日汇总
-        </div>
-      </div>
-    </div>
-    <div class="segment showColorData">
-      <div class="cell cell-1">
+  <div style="padding-bottom:50px;" :class="{fixedBg: isFixedBg}">
+    <Header @setFixedBg="setFixedBg"></Header>
+    <div class="segment showColorData-two-col">
+      <div class="cell cell-1" @click="goColorInfo">
         <div>
           <h2>81190.<small>23</small></h2>
           <p>流水(元)</p>
@@ -64,11 +49,12 @@
       </div>
       <div style="width:100%;height:300px;"
         v-for="(item, index) in tabContents" :key="index"
-        :id="item.id" v-show="index === num"></div>
+        :id="item.id" v-show="index === num">
+      </div>
     </div>
     <h4 class="page-header">营业详情</h4>
     <div class="segment" style="padding:0;">
-      <table class="table">
+      <table class="table table-two-col">
         <tr>
           <td>
             <h2>77305.24</h2>
@@ -134,7 +120,7 @@
 
     <h4 class="page-header">客人自助</h4>
     <div class="segment" style="padding:0;">
-      <table class="table">
+      <table class="table table-two-col">
         <tr>
           <td>
             <h2>0</h2>
@@ -160,7 +146,7 @@
 
     <h4 class="page-header">异常监控</h4>
     <div class="segment" style="padding:0;">
-      <table class="table">
+      <table class="table table-two-col">
         <tr>
           <td>
             <h2>6895.63</h2>
@@ -191,7 +177,7 @@
       </a>
     </h4>
     <div class="segment" style="padding:0;">
-      <table class="table">
+      <table class="table table-two-col">
         <tr>
           <td>
             <h2>1</h2>
@@ -217,7 +203,7 @@
 
     <h4 class="page-header">菜品分析</h4>
     <div class="segment" style="padding:0;">
-      <table class="table">
+      <table class="table table-two-col">
         <tr>
           <td>
             <h2>10</h2>
@@ -233,7 +219,7 @@
 
     <h4 class="page-header">客人构成</h4>
     <div class="segment" style="padding:0;">
-      <table class="table">
+      <table class="table table-two-col">
         <tr>
           <td>
             <h2>79.96%</h2>
@@ -259,7 +245,7 @@
 
     <h4 class="page-header">业务构成</h4>
     <div class="segment" style="padding:0;">
-      <table class="table">
+      <table class="table table-two-col">
         <tr>
           <td>
             <h2>86.91%</h2>
@@ -283,34 +269,18 @@
       </table>
     </div>
 
-    <Store :isShow="isShowStore"
-      @handleSelectStoreOK="handleSelectStoreOK"></Store>
-
-    <ChangeDateComponent :isShow="isShowDateComponent"
-      @handleSelectDateOK="handleSelectDateOK">
-    </ChangeDateComponent>
-
-
-
-
-
-
   </div>
 </template>
 
 <script>
-import Store from '@/components/store'
-import ChangeDateComponent from '@/components/changeDateComponent'
+import Header from '@/components/header'
 export default {
   components: {
-    Store,
-    ChangeDateComponent
+    Header
   },
   data () {
     return {
-      isShowDateComponent: false,
-      isShowFixedBg: false,
-      isShowStore: false,
+      isFixedBg: false,
       tabs: ['营业实收', '就餐人数'],
       tabContents: [
         {
@@ -334,28 +304,11 @@ export default {
     this.showRealIncome()
   },
   methods: {
-    handleChangeDate () {
-      if (this.isShowDateComponent === false) {
-        this.isShowDateComponent = true
-        this.isShowFixedBg = true
-      } else {
-        this.isShowDateComponent = false
-        this.isShowFixedBg = false
-      }
+    setFixedBg (val) {
+      this.isFixedBg = val
     },
-    handleSelectDateOK () {
-      this.isShowDateComponent = false
-      this.isShowFixedBg = false
-    },
-    handleChangeStore () {
-      // 关闭日期组件 isShowDateComponent
-      this.isShowDateComponent = false
-      this.isShowStore = true
-      this.isShowFixedBg = true
-    },
-    handleSelectStoreOK () {
-      this.isShowStore = false
-      this.isShowFixedBg = false
+    goColorInfo () {
+      this.$router.push({ name: 'colorInfo' })
     },
     handleChangeChart (index) {
       this.num = index
@@ -460,79 +413,8 @@ export default {
 </script>
 
 <style scoped>
-  /* 头部样式 */
-  .header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 99999999;
-    box-shadow: 1px 1px 3px #c7c7c7;
-  }
-  .header-1,
-  .header-2 {
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #525252;
-  }
-  .header-1 {
-    background-color: #fff;
-    padding: 0 15px;
-  }
-  .changeStore {
-    color: #20ae93;
-  }
-  .changeStore .list-cell-ft {
-    display: flex;
-    width: 48px;
-    position: relative;
-  }
-  .changeStore .list-cell-ft::after {
-    content: '';
-    display: inline-block;
-    height: 6px;
-    width: 6px;
-    border-width: 2px 2px 0 0;
-    border-color: #20ae93;
-    border-style: solid;
-    -webkit-transform: matrix(0.71, 0.71, 0.71, -0.71, 0, 0);
-    transform: matrix(0.71, 0.71, 0.71, -0.71, 0, 0);
-    position: relative;
-    top: -2px;
-    position: absolute;
-    top: 50%;
-    margin-top: -16px;
-    right: 2px;
-  }
-  .header-2 {
-    background-color: #f2f2f2;
-  }
-  .dateControl {
-    padding-left: 15px;
-    height: 100%;
-    width: 70%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    border-right: 1px solid #e3e3e3;
-  }
-  .changeDate {
-    padding: 0 15px;
-    height: 100%;
-    width: 30%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-    cursor: pointer;
-  }
-  .changeDate:active {
-    background-color: #ececec;
-  }
-
   /* 彩色数据模块样式 */
-  .showColorData {
+  .showColorData-two-col {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
@@ -540,49 +422,40 @@ export default {
     padding-bottom: 7px;
   }
 
-  /* 单元格样式 */
-  .cell {
+
+  .table-two-col tr td {
+    width: 50%;
     height: 100px;
-    width: 49%;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-  }
-  .cell-1 {
-    background-color: #e1b14b;
-  }
-  .cell-2 {
-    background-color: #33b79f;
-  }
-  .cell-3 {
-    background-color: #41c8cc;
-  }
-  .cell-4 {
-    background-color: #ec6e62;
-  }
-  .cell-5,
-  .cell-6 {
-    background-color: #f2f2f2;
-    color: #525252;
-  }
-  .cell > div {
     text-align: center;
+    vertical-align: middle;
+    position: relative;
   }
-  .cell > div > p {
+  .table-two-col tr td::after {
+    content: '';
+    height: 200%;
+    width: 200%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    transform: scale(.5);
+    -webkit-transform: scale(.5);
+    transform-origin: 0 0;
+    -webkit-transform: 0 0;
+  }
+  .table-two-col tr:nth-of-type(1) td::after {
+    border-top: 1px solid #eeeeee;
+  }
+  .table-two-col tr td:nth-child(even)::after {
+    border-right: none;
+  }
+  .table-two-col h2 {
+    color: #3d3d3d;
+    font-weight: normal;
+  }
+  .table-two-col p {
+    color: #ababab;
     font-size: 14px;
-  }
-  .cell-5 > div > p,
-  .cell-6 > div > p {
-    color: #878787;
-  }
-  .tab {
-    display: flex;
-    margin-bottom: 20px;
-  }
-  .fixedBg {
-    height: 100vh;
-    overflow: hidden;
   }
 </style>
