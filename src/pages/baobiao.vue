@@ -63,6 +63,21 @@ export default {
 <style scoped>
   .table-9 tr td {
     width: 30%;
+    position: relative;
+  }
+  .table-9 tr td::after {
+    content: '';
+    height: 200%;
+    width: 200%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    transform: scale(.5);
+    -webkit-transform: scale(.5);
+    transform-origin: 0 0;
+    -webkit-transform: 0 0;
   }
   /* 把td为偶数的右边框显示出来 */
   .table-9 tr td:nth-child(even)::after {

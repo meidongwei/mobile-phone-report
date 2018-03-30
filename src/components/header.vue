@@ -16,7 +16,7 @@
           <div class="btn-dateControl btn-dateControl-right list-cell-ft"></div>
         </div>
         <div class="changeDate" @click="handleChangeDate">
-          日汇总
+          {{ this.$store.state.changeDate }}
         </div>
       </div>
     </div>

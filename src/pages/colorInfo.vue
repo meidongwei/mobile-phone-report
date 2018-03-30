@@ -1,9 +1,8 @@
 <template>
   <div :class="{fixedBg: isFixedBg}">
     <Header @setFixedBg="setFixedBg"></Header>
-    <div class="segment showColorData-one-col"
-      style="margin-bottom:0;">
-      <div class="cell cell-1">
+    <div class="segment showColorData-one-col">
+      <div class="cell cell-1" style="margin-bottom:15px;">
         <div>
           <h2>81190.<small>23</small></h2>
           <p>流水(元)</p>

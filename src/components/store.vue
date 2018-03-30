@@ -11,125 +11,203 @@
     <div class="store-right">
       <div class="store-right-title">
         <h4>全选</h4>
-        <input type="checkbox">
+        <label class="check-box">
+          <input type="checkbox">
+          <span class="publicInput checkboxInput"></span>
+        </label>
       </div>
       <div class="store-right-item">
         <div class="item-title">
           <h5>裕华区</h5>
-          <input type="checkbox">
+          <label class="check-box">
+            <input type="checkbox">
+            <span class="publicInput checkboxInput"></span>
+          </label>
         </div>
         <ul>
           <li>
             中餐1店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
           <li>
             中餐2店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
           <li>
             中餐3店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
           <li>
             中餐10店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
         </ul>
       </div>
       <div class="store-right-item">
         <div class="item-title">
-          <h5>裕华区</h5>
-          <input type="checkbox">
+          <h5>桥西区</h5>
+          <label class="check-box">
+            <input type="checkbox">
+            <span class="publicInput checkboxInput"></span>
+          </label>
         </div>
         <ul>
           <li>
             中餐1店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
           <li>
             中餐2店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
           <li>
             中餐3店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
           <li>
             中餐10店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
         </ul>
       </div>
       <div class="store-right-item">
         <div class="item-title">
-          <h5>裕华区</h5>
-          <input type="checkbox">
+          <h5>桥东区</h5>
+          <label class="check-box">
+            <input type="checkbox">
+            <span class="publicInput checkboxInput"></span>
+          </label>
         </div>
         <ul>
           <li>
             中餐1店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
           <li>
             中餐2店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
           <li>
             中餐3店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
           <li>
             中餐10店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
         </ul>
       </div>
       <div class="store-right-item">
         <div class="item-title">
-          <h5>裕华区</h5>
-          <input type="checkbox">
+          <h5>开发区</h5>
+          <label class="check-box">
+            <input type="checkbox">
+            <span class="publicInput checkboxInput"></span>
+          </label>
         </div>
         <ul>
           <li>
             中餐1店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
           <li>
             中餐2店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
           <li>
             中餐3店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
           <li>
             中餐10店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
         </ul>
       </div>
       <div class="store-right-item">
         <div class="item-title">
-          <h5>裕华区</h5>
-          <input type="checkbox">
+          <h5>长安区</h5>
+          <label class="check-box">
+            <input type="checkbox">
+            <span class="publicInput checkboxInput"></span>
+          </label>
         </div>
         <ul>
           <li>
             中餐1店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
           <li>
             中餐2店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
           <li>
             中餐3店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
           <li>
             中餐10店
-            <input type="checkbox">
+            <label class="check-box">
+              <input type="checkbox">
+              <span class="publicInput checkboxInput"></span>
+            </label>
           </li>
         </ul>
       </div>
@@ -150,7 +228,6 @@ export default {
   },
   data () {
     return {
-      aa: false
     }
   },
   methods: {
@@ -230,11 +307,14 @@ export default {
     justify-content: space-between;
     align-items: center;
   }
+  .store .store-right-title:active {
+    background-color: #ececec;
+  }
   .store-right-item .item-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 15px;
+    padding: 10px 15px 10px 8px;
   }
   .store-right-item .item-title h5 {
     color: #888888;
@@ -277,4 +357,54 @@ export default {
     border: none;
   }
 
+
+  /* 多选框、单选框美化样式 */
+  .check-box {
+    display: flex;
+  }
+  .check-box input {
+    display: none;
+  }
+  .check-box span {
+    height: 16px;
+    width: 16px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.2);
+    position: relative;
+    box-sizing: content-box;
+  }
+  .publicInput,
+  .check-box input:checked + .publicInput:after {
+    background-color: #20ae93;
+    content: '';
+    height: 12px;
+    width: 12px;
+    margin: 2px;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .publicInput {
+    margin: 0;
+  }
+  .checkboxInput,
+  .check-box input:checked + .checkboxInput:after {
+    border-radius: 0;
+  }
+  .radioInput,
+  .check-box input:checked + .radioInput:after {
+    border-radius: 100%;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  /*  */
 </style>

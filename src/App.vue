@@ -95,7 +95,7 @@ export default {
   .segment {
     padding: 15px;
     background-color: #fff;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
   /* 区域块标题样式 */
   .page-header {

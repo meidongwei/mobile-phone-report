@@ -1,15 +1,16 @@
 <template>
   <div class="dateWrapper" v-if="isShow">
     <ul>
-      <li @click="handleSelectDateOK">日汇总</li>
-      <li @click="handleSelectDateOK">周汇总</li>
-      <li @click="handleSelectDateOK">月汇总</li>
-      <li @click="handleSelectDateOK">年汇总</li>
+      <li @click="handleSelectDateOK(index)"
+        v-for="(item, index) in dateList">
+        {{ item.name }}
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
+import store from '@/store/store'
 export default {
   props: {
     isShow: {
@@ -17,9 +18,19 @@ export default {
       default: false
     }
   },
+  data () {
+    return {
+    }
+  },
+  computed: {
+    dateList () {
+      return this.$store.state.dateList
+    }
+  },
   methods: {
-    handleSelectDateOK () {
+    handleSelectDateOK (index) {
       this.$emit('handleSelectDateOK')
+      this.$store.commit('changeDate', {num:index})
     }
   }
 }
@@ -32,6 +43,8 @@ export default {
     left: 0;
     background-color: #fff;
     width: 100%;
+    z-index: 2;
+    box-shadow: 1px 1px 10px #9f9f9f;
   }
   .dateWrapper ul li {
     padding: 10px 15px;
