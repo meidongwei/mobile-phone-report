@@ -4,7 +4,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    changeDate: '日汇总',
+    showDate: '1',
+    showDateTitle: 1,
     dateList: [
       {
         id: 1,
@@ -24,12 +25,29 @@ export default new Vuex.Store({
       }
     ]
   },
+  getters: {
+  },
   mutations: {
-    changeDate (state, obj) {
+    changeDateTitle (state, obj) {
       for (let i=0;i<state.dateList.length;i++) {
         if (state.dateList[i].id === Number(obj.num) + 1) {
-          state.changeDate = state.dateList[i].name
+          state.showDateTitle = state.dateList[i].id
         }
+      }
+    },
+    changeDate (state, obj) {
+      if (Number(obj.num) + 1 === 1) {
+        // 日汇总
+        state.showDate = '1'
+      } else if (Number(obj.num) + 1 === 2) {
+        // 周汇总
+        state.showDate = '2'
+      } else if (Number(obj.num) + 1 === 3) {
+        // 月汇总
+        state.showDate = '3'
+      } else if (Number(obj.num) + 1 === 4) {
+        // 年汇总
+        state.showDate = '4'
       }
     }
   },

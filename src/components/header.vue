@@ -11,19 +11,21 @@
       </div>
       <div class="header-2">
         <div class="dateControl">
-          <div class="btn-dateControl btn-dateControl-left list-cell-ft"></div>
-          <div class="content">2018-03-29 星期四</div>
-          <div class="btn-dateControl btn-dateControl-right list-cell-ft"></div>
+          <div class="btn-dateControl btn-dateControl-left list-cell-ft"
+            @click="previous"></div>
+          <div class="content">{{ showDate }}</div>
+          <div class="btn-dateControl btn-dateControl-right list-cell-ft"
+            @click="next"></div>
         </div>
         <div class="changeDate" @click="handleChangeDate">
-          {{ this.$store.state.changeDate }}
+          {{ dateTitle }}
         </div>
       </div>
     </div>
 
-    <Store :isShow="isShowStore"
+    <ChangeStoreComponent :isShow="isShowStore"
       @handleSelectStoreOK="handleSelectStoreOK">
-    </Store>
+    </ChangeStoreComponent>
 
     <ChangeDateComponent :isShow="isShowDateComponent"
       @handleSelectDateOK="handleSelectDateOK">
@@ -33,11 +35,11 @@
 </template>
 
 <script>
-import Store from '@/components/store'
+import ChangeStoreComponent from '@/components/changeStoreComponent'
 import ChangeDateComponent from '@/components/changeDateComponent'
 export default {
   components: {
-    Store,
+    ChangeStoreComponent,
     ChangeDateComponent
   },
   data () {
@@ -46,7 +48,68 @@ export default {
       isShowDateComponent: false
     }
   },
+  computed: {
+    dateTitle () {
+      let dateTitle = this.$store.state.showDateTitle
+      if (dateTitle === 1) {
+        return '日汇总'
+      } else if (dateTitle === 2) {
+        return '周汇总'
+      } else if (dateTitle === 3) {
+        return '月汇总'
+      } else if (dateTitle === 4) {
+        return '年汇总'
+      }
+    },
+    showDate () {
+      let date = new Date()
+      let y = date.getFullYear()
+      let m = date.getMonth() + 1
+      m = m < 10 ? '0' + m : m
+      let d = date.getDate()
+      d = d < 10 ? ('0' + d) : d
+      let day = date.getDay()
+      let _day = this.changeWeek(day)
+      // 本周第一天
+      let start = Number(d) - day + 1
+      start = start < 10 ? '0' + start : start
+      // 本周最后一天
+      let end = Number(d) + (6 - day)
+      end = end < 10 ? '0' + end : end
+      // 04-02/04-07
+      let showWeek = m + '-' + start + '/' + m + '-' + end
+
+      if (this.$store.state.showDate === '1') {
+        return y + '-' + m + '-' + d + ' 星期' + _day
+      } else if (this.$store.state.showDate === '2') {
+        return showWeek
+      } else if (this.$store.state.showDate === '3') {
+        return y + '-' + m
+      } else if (this.$store.state.showDate === '4') {
+        return y
+      }
+
+    }
+  },
   methods: {
+    // 转换星期方法
+    changeWeek (day) {
+      if (day === 1) {
+        return '一'
+      } else if (day === 2) {
+        return '二'
+      } else if (day === 3) {
+       return '三'
+      } else if (day === 4) {
+        return '四'
+      } else if (day === 5) {
+        return '五'
+      } else if (day === 6) {
+        return '六'
+      } else if (day === 7) {
+        return '日'
+      }
+    },
     handleChangeStore () {
       // 关闭日期组件 isShowDateComponent
       this.isShowDateComponent = false
@@ -69,6 +132,45 @@ export default {
     handleSelectDateOK () {
       this.isShowDateComponent = false
       this.$emit('setFixedBg', false)
+    },
+    previous () {
+      let date = new Date()
+      let y = date.getFullYear()
+      let m = date.getMonth() + 1
+      m = m < 10 ? '0' + m : m
+      let d = date.getDate()
+      d = d < 10 ? ('0' + d) : d
+      let day = date.getDay()
+      let _day = this.changeWeek(day)
+
+      // 本周第一天
+      let start = Number(d) - day + 1
+      start = start < 10 ? '0' + start : start
+      // 本周最后一天
+      let end = Number(d) + (6 - day)
+      end = end < 10 ? '0' + end : end
+      // 04-02/04-07
+      let showWeek = m + '-' + start + '/' + m + '-' + end
+
+      // 日期前一天
+      let preD = date.getDate() - 1
+      preD = preD < 10 ? ('0' + preD) : preD
+      // 星期前一天
+      let preDay
+      if (day === 1) {
+        preDay = this.changeWeek(7)
+      } else {
+        preDay = this.changeWeek(day - 1)
+      }
+
+
+      let dateTitle = this.$store.state.showDateTitle
+      if (dateTitle === 1) {
+        console.log(y + '-' + m + '-' + preD + ' 星期' + preDay)
+      }
+    },
+    next () {
+      console.log(222)
     }
   }
 }
@@ -167,7 +269,7 @@ export default {
     position: absolute;
     top: 50%;
     margin-top: -4px;
-    right: 22px;
+    right: 17px;
   }
   .dateControl .btn-dateControl-left::after {
     -webkit-transform: matrix(-0.71, 0.71, 0.71, 0.71, 0, 0);

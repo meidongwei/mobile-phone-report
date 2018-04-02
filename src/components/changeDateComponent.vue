@@ -29,7 +29,11 @@ export default {
   },
   methods: {
     handleSelectDateOK (index) {
+      // 通知父组件关闭自己
       this.$emit('handleSelectDateOK')
+      // 更新状态显示（日汇总 => 月汇总）
+      this.$store.commit('changeDateTitle', {num:index})
+      // 更新日期组件
       this.$store.commit('changeDate', {num:index})
     }
   }
