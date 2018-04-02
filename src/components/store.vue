@@ -2,210 +2,39 @@
   <div v-if="isShow" class="store">
     <div class="store-left">
       <ul>
-        <li><a href="javascript:;">品智中餐</a></li>
-        <li><a href="javascript:;">品智快餐</a></li>
-        <li><a href="javascript:;">品智正餐</a></li>
-        <li><a href="javascript:;">Marzano</a></li>
+        <li v-for="(item, index) in typeOfMealList" :key="index">
+          <a href="javascript:;"
+            :class="{ active: isActive === item.id }"
+            @click="handleChangeTypeOfMeal(index)">
+            {{ item.name }}
+          </a>
+        </li>
       </ul>
     </div>
     <div class="store-right">
       <div class="store-right-title">
-        <h4>全选</h4>
         <label class="check-box">
-          <input type="checkbox">
+          <input type="checkbox" :checked="isAllChecked()"
+            @change="changeAllChecked($event)">全选
           <span class="publicInput checkboxInput"></span>
         </label>
       </div>
-      <div class="store-right-item">
+      <div class="store-right-item"
+        v-for="(item, index) in storeList" :key="index">
         <div class="item-title">
-          <h5>裕华区</h5>
           <label class="check-box">
-            <input type="checkbox">
+            <input type="checkbox" :checked="isTitleChecked(item)"
+              @change="changeTitleChecked(item, $event)">
+            {{ item.title }}
             <span class="publicInput checkboxInput"></span>
           </label>
         </div>
         <ul>
-          <li>
-            中餐1店
+          <li v-for="(item2, index) in item.list" :key="index">
             <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-          <li>
-            中餐2店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-          <li>
-            中餐3店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-          <li>
-            中餐10店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-        </ul>
-      </div>
-      <div class="store-right-item">
-        <div class="item-title">
-          <h5>桥西区</h5>
-          <label class="check-box">
-            <input type="checkbox">
-            <span class="publicInput checkboxInput"></span>
-          </label>
-        </div>
-        <ul>
-          <li>
-            中餐1店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-          <li>
-            中餐2店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-          <li>
-            中餐3店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-          <li>
-            中餐10店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-        </ul>
-      </div>
-      <div class="store-right-item">
-        <div class="item-title">
-          <h5>桥东区</h5>
-          <label class="check-box">
-            <input type="checkbox">
-            <span class="publicInput checkboxInput"></span>
-          </label>
-        </div>
-        <ul>
-          <li>
-            中餐1店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-          <li>
-            中餐2店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-          <li>
-            中餐3店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-          <li>
-            中餐10店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-        </ul>
-      </div>
-      <div class="store-right-item">
-        <div class="item-title">
-          <h5>开发区</h5>
-          <label class="check-box">
-            <input type="checkbox">
-            <span class="publicInput checkboxInput"></span>
-          </label>
-        </div>
-        <ul>
-          <li>
-            中餐1店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-          <li>
-            中餐2店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-          <li>
-            中餐3店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-          <li>
-            中餐10店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-        </ul>
-      </div>
-      <div class="store-right-item">
-        <div class="item-title">
-          <h5>长安区</h5>
-          <label class="check-box">
-            <input type="checkbox">
-            <span class="publicInput checkboxInput"></span>
-          </label>
-        </div>
-        <ul>
-          <li>
-            中餐1店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-          <li>
-            中餐2店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-          <li>
-            中餐3店
-            <label class="check-box">
-              <input type="checkbox">
-              <span class="publicInput checkboxInput"></span>
-            </label>
-          </li>
-          <li>
-            中餐10店
-            <label class="check-box">
-              <input type="checkbox">
+              <input type="checkbox" v-model="item.selected"
+                :value="item2.id">
+              {{ item2.name }}
               <span class="publicInput checkboxInput"></span>
             </label>
           </li>
@@ -228,11 +57,75 @@ export default {
   },
   data () {
     return {
+      isActive: 2,
+      typeOfMealList: [
+        { id: 1, name: '品智中餐' },
+        { id: 2, name: '品智快餐' },
+        { id: 3, name: '品智正餐' },
+        { id: 4, name: '品智晚餐' }
+      ],
+      storeList: [
+        {
+          title: '裕华区',
+          selected: [1, 2, 3, 4],
+          list: [
+            { id: 1, name: '中餐1店' },
+            { id: 2, name: '中餐2店' },
+            { id: 3, name: '中餐3店' },
+            { id: 4, name: '中餐4店' },
+          ]
+        },
+        {
+          title: '长安区',
+          selected: [3, 4],
+          list: [
+            { id: 1, name: '中餐1店' },
+            { id: 2, name: '中餐2店' },
+            { id: 3, name: '中餐3店' },
+            { id: 4, name: '中餐4店' },
+          ]
+        }
+      ]
     }
   },
   methods: {
     handleSelectStoreOK () {
       this.$emit('handleSelectStoreOK')
+    },
+    isTitleChecked (item) {
+      return item.list.every((item2) => {
+        return item.selected.indexOf(item2.id) != -1
+      })
+    },
+    changeTitleChecked (item, event) {
+      if (event.target.checked === true) {
+        item.list.forEach((item2) => {
+          item.selected.indexOf(item2.id) === -1 && item.selected.push(item2.id)
+        })
+      } else {
+        item.selected = []
+      }
+    },
+    isAllChecked () {
+      return this.storeList.every((item) => {
+        return item.selected.length === item.list.length
+      })
+    },
+    changeAllChecked (event) {
+      if (event.target.checked === true) {
+        this.storeList.forEach((item) => {
+          item.list.forEach((item2) => {
+            item.selected.indexOf(item2.id) === -1 && item.selected.push(item2.id)
+          })
+        })
+      } else {
+        this.storeList.forEach((item) => {
+          item.selected = []
+        })
+      }
+    },
+    handleChangeTypeOfMeal (index) {
+      this.isActive = index + 1
     }
   }
 }
@@ -255,6 +148,9 @@ export default {
     padding: 20px 15px;
     font-size: 16px;
     position: relative;
+  }
+  .store-left a.active {
+    color: #20ae93;
   }
   .store-left a:active {
     background-color: #ececec;
@@ -302,23 +198,20 @@ export default {
   }
   .store .store-right-title {
     background-color: #fff;
+  }
+  .store .store-right-title .check-box {
     padding: 30px 15px 10px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
   .store .store-right-title:active {
     background-color: #ececec;
   }
   .store-right-item .item-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 15px 10px 8px;
-  }
-  .store-right-item .item-title h5 {
+    font-size: 14px;
     color: #888888;
     font-weight: normal;
+  }
+  .store-right-item .item-title .check-box {
+    padding: 10px 15px 10px 8px;
   }
   .store-right-item .item-title:active {
     background-color: #ececec;
@@ -331,9 +224,11 @@ export default {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 10px 15px;
     position: relative;
     color: #525252;
+  }
+  .store-right-item ul li .check-box {
+    padding: 10px 15px;
   }
   .store-right-item ul li:active {
     background-color: #ececec;
@@ -361,6 +256,9 @@ export default {
   /* 多选框、单选框美化样式 */
   .check-box {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
   }
   .check-box input {
     display: none;
@@ -395,8 +293,6 @@ export default {
   .check-box input:checked + .radioInput:after {
     border-radius: 100%;
   }
-
-
 
 
 
