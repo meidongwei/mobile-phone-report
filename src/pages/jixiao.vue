@@ -8,7 +8,7 @@
           <p>流水(元)</p>
         </div>
       </div>
-      <div class="cell cell-2">
+      <div class="cell cell-2" @click="goColorInfo">
         <div>
           <h2>45497.<small>19</small></h2>
           <p>实收(元)</p>
@@ -290,7 +290,39 @@ export default {
           id: 'numberOfPeople'
         }
       ],
-      num: 0
+      num: 0,
+      colorList: [
+        {
+          data: '81190.23',
+          title: '流水(元)',
+          class: 'cell-1'
+        },
+        {
+          data: '45497.19',
+          title: '实收(元)',
+          class: 'cell-2'
+        },
+        {
+          data: '7281.52',
+          title: '成本(元)',
+          class: 'cell-3'
+        },
+        {
+          data: '38215.27',
+          title: '毛利(元)',
+          class: 'cell-4'
+        },
+        {
+          data: '12018.63',
+          title: '未结金额(元)',
+          class: 'cell-5'
+        },
+        {
+          data: '302/14',
+          title: '已结/未结账单(元)',
+          class: 'cell-6'
+        }
+      ]
     }
   },
   computed: {

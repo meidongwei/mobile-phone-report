@@ -45,12 +45,20 @@ export default {
   data () {
     return {
       isShowStore: false,
-      isShowDateComponent: false
+      isShowDateComponent: false,
+      y1: '', // 起始年
+      y2: '', // 结束年
+      m1: '', // 起始月
+      m2: '', // 结束月
+      d1: '', // 起始日
+      d2: '', // 结束日
+      all: '', // 全部
+      dd: '' // 星期
     }
   },
   computed: {
     dateTitle () {
-      let dateTitle = this.$store.state.showDateTitle
+      let dateTitle = this.$store.state.selectedTitle
       if (dateTitle === 1) {
         return '日汇总'
       } else if (dateTitle === 2) {
@@ -62,56 +70,37 @@ export default {
       }
     },
     showDate () {
-      let date = new Date()
-      let y = date.getFullYear()
-      let m = date.getMonth() + 1
-      m = m < 10 ? '0' + m : m
-      let d = date.getDate()
-      d = d < 10 ? ('0' + d) : d
-      let day = date.getDay()
-      let _day = this.changeWeek(day)
-      // 本周第一天
-      let start = Number(d) - day + 1
-      start = start < 10 ? '0' + start : start
-      // 本周最后一天
-      let end = Number(d) + (6 - day)
-      end = end < 10 ? '0' + end : end
-      // 04-02/04-07
-      let showWeek = m + '-' + start + '/' + m + '-' + end
-
-      if (this.$store.state.showDate === '1') {
-        return y + '-' + m + '-' + d + ' 星期' + _day
-      } else if (this.$store.state.showDate === '2') {
-        return showWeek
-      } else if (this.$store.state.showDate === '3') {
-        return y + '-' + m
-      } else if (this.$store.state.showDate === '4') {
-        return y
+      let selTitle = this.$store.state.selectedTitle
+      if (selTitle === 2) {
+        let u = this.$store.state.showDate
+        let m1 = u.split('/')[0].split('-')[1]
+        let d1 = u.split('/')[0].split('-')[2]
+        let m2 = u.split('/')[1].split('-')[1]
+        let d2 = u.split('/')[1].split('-')[2]
+        return m1 + '-' + d1 + '/' + m2 + '-' + d2
+      } else {
+        return this.$store.state.showDate
       }
-
     }
   },
+  created () {
+    this.handleAutoChangeDate()
+  },
   methods: {
-    // 转换星期方法
-    changeWeek (day) {
-      if (day === 1) {
-        return '一'
-      } else if (day === 2) {
-        return '二'
-      } else if (day === 3) {
-       return '三'
-      } else if (day === 4) {
-        return '四'
-      } else if (day === 5) {
-        return '五'
-      } else if (day === 6) {
-        return '六'
-      } else if (day === 7) {
-        return '日'
+    // 初始化页面时自动显示（日汇总/周汇总/月汇总/年汇总）
+    handleAutoChangeDate () {
+      let selTitle = this.$store.state.selectedTitle
+      if (selTitle === 1) {
+        this.$store.commit('showDate111')
+      } else if (selTitle === 2) {
+        this.$store.commit('showWeek111')
+      } else if (selTitle === 3) {
+        this.$store.commit('showMonth111')
+      } else if (selTitle === 4) {
+        this.$store.commit('showYear111')
       }
     },
     handleChangeStore () {
-      // 关闭日期组件 isShowDateComponent
       this.isShowDateComponent = false
       this.isShowStore = true
       this.$emit('setFixedBg', true)
@@ -133,44 +122,342 @@ export default {
       this.isShowDateComponent = false
       this.$emit('setFixedBg', false)
     },
+    // 获取某年某月的天数
+    handleGetNumOfMonth (year, month) {
+      let d = new Date(year, month, 0)
+      return d.getDate()
+    },
     previous () {
-      let date = new Date()
-      let y = date.getFullYear()
-      let m = date.getMonth() + 1
-      m = m < 10 ? '0' + m : m
-      let d = date.getDate()
-      d = d < 10 ? ('0' + d) : d
-      let day = date.getDay()
-      let _day = this.changeWeek(day)
-
-      // 本周第一天
-      let start = Number(d) - day + 1
-      start = start < 10 ? '0' + start : start
-      // 本周最后一天
-      let end = Number(d) + (6 - day)
-      end = end < 10 ? '0' + end : end
-      // 04-02/04-07
-      let showWeek = m + '-' + start + '/' + m + '-' + end
-
-      // 日期前一天
-      let preD = date.getDate() - 1
-      preD = preD < 10 ? ('0' + preD) : preD
-      // 星期前一天
-      let preDay
-      if (day === 1) {
-        preDay = this.changeWeek(7)
-      } else {
-        preDay = this.changeWeek(day - 1)
-      }
-
-
-      let dateTitle = this.$store.state.showDateTitle
+      let dateTitle = this.$store.state.selectedTitle
       if (dateTitle === 1) {
-        console.log(y + '-' + m + '-' + preD + ' 星期' + preDay)
+        // **********
+        // 日汇总
+        // **********
+        // 获取数据源
+        let date = this.$store.state.showDate
+        // 当天/当月/当年（number）
+        let NowD = Number(date.split('-')[2].split(' ')[0])
+        let NowMon = Number(date.split('-')[1])
+        let NowYear = Number(date.split('-')[0])
+        // 日期前一天
+        if (NowD === 1) {
+          if (NowMon === 1) {
+            this.y1 = NowYear - 1
+            this.m1 = 12
+            this.d1 = this.handleGetNumOfMonth(this.y1, this.m1)
+            this.d1 = this.d1 < 10 ? '0' + this.d1 : this.d1
+          } else {
+            this.y1 = NowYear
+            this.m1 = NowMon - 1
+            this.m1 = this.m1 < 10 ? '0' + this.m1 : this.m1
+            this.d1 = this.handleGetNumOfMonth(this.y1, this.m1)
+            this.d1 = this.d1 < 10 ? '0' + this.d1 : this.d1
+          }
+        } else {
+          this.y1 = NowYear
+          this.m1 = NowMon
+          this.m1 = this.m1 < 10 ? '0' + this.m1 : this.m1
+          this.d1 = NowD - 1
+          this.d1 = this.d1 < 10 ? '0' + this.d1 : this.d1
+        }
+        // 星期前一天
+        this.dd = date.split('-')[2].split(' ')[1].split('')[2]
+        if (this.dd === '一') {
+          this.dd = '日'
+        } else if (this.dd === '二') {
+          this.dd = '一'
+        } else if (this.dd === '三') {
+          this.dd = '二'
+        } else if (this.dd === '四') {
+          this.dd = '三'
+        } else if (this.dd === '五') {
+          this.dd = '四'
+        } else if (this.dd === '六') {
+          this.dd = '五'
+        } else if (this.dd === '日') {
+          this.dd = '六'
+        }
+        this.all = this.y1 + '-' + this.m1 + '-' +
+          this.d1 + ' 星期' + this.dd
+        this.$store.state.showDate = this.all
+      } else if (dateTitle === 2) {
+        // **********
+        // 周汇总
+        // **********
+        // 获取数据源
+        let date = this.$store.state.showDate
+        // 截取当前周的一些信息
+        let startYear = Number(date.split('/')[0].split('-')[0])
+        let endYear = Number(date.split('/')[1].split('-')[0])
+        let startMon = Number(date.split('/')[0].split('-')[1])
+        let endMon = Number(date.split('/')[1].split('-')[1])
+        let a = Number(date.split('/')[0].split('-')[2])
+        let b = Number(date.split('/')[1].split('-')[2])
+
+        if (a > b) {
+          // 本周跨月，上周上一个月
+          this.y1 = startYear
+          this.y2 = startYear
+          this.m1 = startMon
+          this.m2 = startMon
+          this.d1 = a - 7
+          this.d2 = a - 1
+
+        } else {
+          if (a === 1) {
+            // 本周在一个月，上周在上一个月（考虑跨年）
+            if (startMon === 1) {
+              this.y1 = startYear - 1
+              this.y2 = endYear - 1
+              this.m1 = 12
+              this.m2 = 12
+              this.d1 = 25
+              this.d2 = 31
+
+            } else {
+              this.y1 = startYear
+              this.y2 = endYear
+              this.m1 = startMon - 1
+              this.m2 = endMon - 1
+              this.d1 = this.handleGetNumOfMonth(this.y1, this.m1) - 6
+              this.d2 = this.handleGetNumOfMonth(this.y1, this.m1)
+
+            }
+          } else if (a - 7 <= 0) {
+            // 本周在一个月，上周跨月（考虑跨年）
+            if (startMon === 1) {
+              this.y1 = startYear - 1
+              this.y2 = endYear
+              this.m1 = 12
+              this.m2 = endMon
+              this.d1 = 31 - Math.abs(a-7)
+              this.d2 = b - 7
+
+            } else {
+              this.y1 = startYear
+              this.y2 = endYear
+              this.m1 = startMon - 1
+              this.m2 = endMon
+              this.d1 = this.handleGetNumOfMonth(this.y1, this.m1) - Math.abs(a-7)
+              this.d2 = b - 7
+
+            }
+          } else {
+            // 本周上周都在一个月（不考虑跨年）
+            this.y1 = startYear
+            this.y2 = endYear
+            this.m1 = startMon
+            this.m2 = endMon
+            this.d1 = a - 7
+            this.d2 = b - 7
+
+          }
+        }
+        this.d1 = this.d1 < 10 ? '0' + this.d1 : this.d1
+        this.d2 = this.d2 < 10 ? '0' + this.d2 : this.d2
+        this.m1 = this.m1 < 10 ? '0' + this.m1 : this.m1
+        this.m2 = this.m2 < 10 ? '0' + this.m2 : this.m2
+        this.all = this.y1 + '-' + this.m1 + '-' + this.d1 +
+          '/' + this.y2 + '-' + this.m2 + '-' + this.d2
+        this.$store.state.showDate = this.all
+      } else if (dateTitle === 3) {
+        // **********
+        // 月汇总
+        // **********
+        // 获取数据源
+        let date = this.$store.state.showDate
+        // 获取当前年月
+        let NowYear = Number(date.split('-')[0])
+        let NowMon = Number(date.split('-')[1])
+
+        if (NowMon === 1) {
+          this.y1 = NowYear - 1
+          this.m1 = 12
+        } else {
+          this.y1 = NowYear
+          this.m1 = NowMon - 1
+        }
+        this.m1 = this.m1 < 10 ? '0' + this.m1 : this.m1
+        this.$store.state.showDate = this.y1 + '-' + this.m1
+      } else {
+        // **********
+        // 年汇总
+        // **********
+        // 获取数据源
+        let date = this.$store.state.showDate
+        this.$store.state.showDate = Number(date) - 1
       }
     },
+
     next () {
-      console.log(222)
+      let dateTitle = this.$store.state.selectedTitle
+      if (dateTitle === 1) {
+        // **********
+        // 日汇总
+        // **********
+        // 获取数据源
+        let date = this.$store.state.showDate
+        // 当天/当月/当年（number）
+        let NowD = Number(date.split('-')[2].split(' ')[0])
+        let NowMon = Number(date.split('-')[1])
+        let NowYear = Number(date.split('-')[0])
+
+        // 日期后一天
+        let d = this.handleGetNumOfMonth(NowYear, NowMon)
+        if (NowD === d) {
+          // 当天日期等于当月最后一天
+          if (NowMon === 12) {
+            // 当月份为12月的时候
+            this.y1 = NowYear + 1
+            this.m1 = 1
+            this.d1 = 1
+          } else {
+            this.y1 = NowYear
+            this.m1 = NowMon + 1
+            this.d1 = 1
+          }
+        } else {
+          this.y1 = NowYear
+          this.m1 = NowMon
+          this.d1 = NowD + 1
+        }
+
+        // 星期后一天
+        this.dd = date.split('-')[2].split(' ')[1].split('')[2]
+        if (this.dd === '一') {
+          this.dd = '二'
+        } else if (this.dd === '二') {
+          this.dd = '三'
+        } else if (this.dd === '三') {
+          this.dd = '四'
+        } else if (this.dd === '四') {
+          this.dd = '五'
+        } else if (this.dd === '五') {
+          this.dd = '六'
+        } else if (this.dd === '六') {
+          this.dd = '日'
+        } else if (this.dd === '日') {
+          this.dd = '一'
+        }
+
+        this.m1 = this.m1 < 10 ? '0' + this.m1 : this.m1
+        this.d1 = this.d1 < 10 ? '0' + this.d1 : this.d1
+        this.all = this.y1 + '-' + this.m1 + '-' +
+          this.d1 + ' 星期' + this.dd
+        this.$store.state.showDate = this.all
+      } else if (dateTitle === 2) {
+        // **********
+        // 周汇总
+        // **********
+        // 获取数据源
+        let date = this.$store.state.showDate
+        // 截取当前周的一些信息
+        let startYear = Number(date.split('/')[0].split('-')[0])
+        let endYear = Number(date.split('/')[1].split('-')[0])
+        let startMon = Number(date.split('/')[0].split('-')[1])
+        let endMon = Number(date.split('/')[1].split('-')[1])
+        let a = Number(date.split('/')[0].split('-')[2])
+        let b = Number(date.split('/')[1].split('-')[2])
+
+        if (a > b) {
+          // 本周跨月，下周下一个月
+          // 04-30/05-06
+          this.y1 = endYear
+          this.y2 = endYear
+          this.m1 = endMon
+          this.m2 = endMon
+          this.d1 = b + 1
+          this.d2 = b + 7
+
+        } else {
+          let numOfMon = this.handleGetNumOfMonth(endYear, endMon)
+          if (b === numOfMon) {
+            // 本周在一个月，下周在下一个月（考虑跨年）
+            if (endMon === 12) {
+              this.y1 = startYear + 1
+              this.y2 = endYear + 1
+              this.m1 = 1
+              this.m2 = 1
+              this.d1 = 1
+              this.d2 = 7
+
+            } else {
+              this.y1 = startYear
+              this.y2 = endYear
+              this.m1 = startMon + 1
+              this.m2 = endMon + 1
+              this.d1 = 1
+              this.d2 = 7
+
+            }
+          } else if (b + 7 >= 31) {
+            // 本周在一个月，下周跨月（考虑跨年）
+            if (endMon === 12) {
+              this.y1 = startYear
+              this.y2 = endYear + 1
+              this.m1 = 12
+              this.m2 = 1
+              this.d1 = a + 7
+              this.d2 = a + 7 + 6 - 31
+
+            } else {
+              this.y1 = startYear
+              this.y2 = endYear
+              this.m1 = startMon
+              this.m2 = endMon + 1
+              this.d1 = a + 7
+              this.d2 = a + 7 + 6 -
+                this.handleGetNumOfMonth(this.y1, this.m1)
+
+            }
+          } else {
+            // 本周下周都在一个月（不考虑跨年）
+            this.y1 = startYear
+            this.y2 = endYear
+            this.m1 = startMon
+            this.m2 = endMon
+            this.d1 = a + 7
+            this.d2 = b + 7
+
+          }
+        }
+        this.d1 = this.d1 < 10 ? '0' + this.d1 : this.d1
+        this.d2 = this.d2 < 10 ? '0' + this.d2 : this.d2
+        this.m1 = this.m1 < 10 ? '0' + this.m1 : this.m1
+        this.m2 = this.m2 < 10 ? '0' + this.m2 : this.m2
+        this.all = this.y1 + '-' + this.m1 + '-' + this.d1 +
+          '/' + this.y2 + '-' + this.m2 + '-' + this.d2
+        this.$store.state.showDate = this.all
+
+      } else if (dateTitle === 3) {
+        // **********
+        // 月汇总
+        // **********
+        // 获取数据源
+        let date = this.$store.state.showDate
+        // 获取当前年月
+        let NowYear = Number(date.split('-')[0])
+        let NowMon = Number(date.split('-')[1])
+
+        if (NowMon === 12) {
+          this.y1 = NowYear + 1
+          this.m1 = 1
+        } else {
+          this.y1 = NowYear
+          this.m1 = NowMon + 1
+        }
+        this.m1 = this.m1 < 10 ? '0' + this.m1 : this.m1
+        this.$store.state.showDate = this.y1 + '-' + this.m1
+
+      } else {
+        // **********
+        // 年汇总
+        // **********
+        // 获取数据源
+        let date = this.$store.state.showDate
+        this.$store.state.showDate = Number(date) + 1
+
+      }
     }
   }
 }
