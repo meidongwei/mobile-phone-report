@@ -41,7 +41,7 @@ export default {
   },
   data () {
     return {
-      isActive: 2,
+      isActive: 1,
       dataList: [
         {
           id: 1,
@@ -59,7 +59,17 @@ export default {
             },
             {
               title: '长安区',
-              selected: [3, 4],
+              selected: [1, 2, 3, 4],
+              list: [
+                { id: 1, name: '中餐1店' },
+                { id: 2, name: '中餐2店' },
+                { id: 3, name: '中餐3店' },
+                { id: 4, name: '中餐4店' },
+              ]
+            },
+            {
+              title: '开发区',
+              selected: [1, 2],
               list: [
                 { id: 1, name: '中餐1店' },
                 { id: 2, name: '中餐2店' },
@@ -98,7 +108,7 @@ export default {
           storeList: [
             {
               title: '裕华区',
-              selected: [1, 4],
+              selected: [1, 2, 3, 4],
               list: [
                 { id: 1, name: '正餐1店' },
                 { id: 2, name: '正餐2店' },
@@ -144,9 +154,47 @@ export default {
       ]
     }
   },
+  mounted () {
+    this.handleSelectStoreOK()
+  },
   methods: {
     handleSelectStoreOK () {
-      this.$emit('handleSelectStoreOK')
+      let selectedList = []
+      for (let i=0;i<this.dataList.length;i++) {
+        if (this.dataList[i].id === this.isActive) {
+          // 判断当前类别中是否都被选中，如果是，则显示
+          // 当前类别 title + '全部'，例如:品智中餐全部
+          let num = 0
+          let total = 0
+          this.dataList[i].storeList.forEach((item) => {
+            num = num + item.selected.length
+            total = total + item.list.length
+          })
+          if (num === total) {
+            selectedList.push(this.dataList[i].name + '全部')
+          } else {
+            // 如果当前类别中没有全选，则判断每个区是否被全选，如果是，
+            // 则显示区名，例如：裕华区；如果否，则显示每个被选择的店名
+            this.dataList[i].storeList.forEach((item) => {
+              if (item.selected.length === item.list.length) {
+                selectedList.push(item.title)
+              } else {
+                item.selected.forEach((selItem) => {
+                  for (let i=0;i<item.list.length;i++) {
+                    if (item.list[i].id === selItem) {
+                      selectedList.push(item.list[i].name)
+                    }
+                  }
+                })
+              }
+            })
+          }
+        }
+      }
+      let obj = {
+        selectedList: selectedList
+      }
+      this.$emit('handleSelectStoreOK', obj)
     },
     handleChangeTypeOfMeal (index) {
       this.isActive = index + 1

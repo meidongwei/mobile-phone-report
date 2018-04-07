@@ -3,7 +3,7 @@
     <div class="header">
       <div class="header-1">
         <div class="title">
-          中餐1店
+          {{ selectedStore }}
         </div>
         <a href="javascript:;" class="changeStore" @click="handleChangeStore">
           换店 <span class="list-cell-ft"></span>
@@ -46,6 +46,7 @@ export default {
     return {
       isShowStore: false,
       isShowDateComponent: false,
+      selectedStore: '',
       y1: '', // 起始年
       y2: '', // 结束年
       m1: '', // 起始月
@@ -105,7 +106,8 @@ export default {
       this.isShowStore = true
       this.$emit('setFixedBg', true)
     },
-    handleSelectStoreOK () {
+    handleSelectStoreOK (obj) {
+      this.selectedStore = obj.selectedList.toString()
       this.isShowStore = false
       this.$emit('setFixedBg', false)
     },
@@ -416,7 +418,7 @@ export default {
             end = d - dd + 7
           }
         }
-        
+
         if (y1 === startYear && m1 === startMon &&
           start === a && y2 === endYear && m2 === endMon &&
           end === b) {
@@ -563,11 +565,10 @@ export default {
     padding: 0 15px;
   }
   .header-1 .title {
-    height: 100%;
     width: 80%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .changeStore {
     color: #20ae93;
