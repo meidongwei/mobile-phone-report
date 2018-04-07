@@ -2,42 +2,16 @@
   <div style="padding-bottom:50px;" :class="{fixedBg: isFixedBg}">
     <Header @setFixedBg="setFixedBg"></Header>
     <div class="segment showColorData-two-col">
-      <div class="cell cell-1" @click="goColorInfo">
+
+      <div class="cell" :class="item.class"
+        v-for="(item, index) in colorList" :key="index"
+        @click="goColorInfo(index)">
         <div>
-          <h2>81190.<small>23</small></h2>
-          <p>流水(元)</p>
+          <h2>{{ item.data }}</h2>
+          <p>{{ item.title }}</p>
         </div>
       </div>
-      <div class="cell cell-2" @click="goColorInfo">
-        <div>
-          <h2>45497.<small>19</small></h2>
-          <p>实收(元)</p>
-        </div>
-      </div>
-      <div class="cell cell-3">
-        <div>
-          <h2>7281.<small>52</small></h2>
-          <p>成本(元)</p>
-        </div>
-      </div>
-      <div class="cell cell-4">
-        <div>
-          <h2>38215.<small>27</small></h2>
-          <p>毛利(元)</p>
-        </div>
-      </div>
-      <div class="cell cell-5">
-        <div>
-          <h2>12018.<small>63</small></h2>
-          <p>未结金额(元)</p>
-        </div>
-      </div>
-      <div class="cell cell-6">
-        <div>
-          <h2>302/14</h2>
-          <p>已结/未结账单</p>
-        </div>
-      </div>
+
     </div>
     <div class="segment">
       <div class="tab">
@@ -339,8 +313,39 @@ export default {
     setFixedBg (val) {
       this.isFixedBg = val
     },
-    goColorInfo () {
-      this.$router.push({ name: 'colorInfo' })
+    goColorInfo (index) {
+      if (index === 0) {
+        this.$router.push({
+          name: 'colorInfo',
+          params: { id: 999 }
+        })
+      } else if (index === 1) {
+        this.$router.push({
+          name: 'colorInfo',
+          params: { id: 111 }
+        })
+      } else if (index === 2) {
+        this.$router.push({
+          name: 'colorInfo',
+          params: { id: 222 }
+        })
+      } else if (index === 3) {
+        this.$router.push({
+          name: 'colorInfo',
+          params: { id: 333 }
+        })
+      } else if (index === 4) {
+        this.$router.push({
+          name: 'colorInfo',
+          params: { id: 444 }
+        })
+      } else if (index === 5) {
+        this.$router.push({
+          name: 'colorInfo',
+          params: { id: 555 }
+        })
+      }
+
     },
     handleChangeChart (index) {
       this.num = index

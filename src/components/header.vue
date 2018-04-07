@@ -302,6 +302,15 @@ export default {
         let NowMon = Number(date.split('-')[1])
         let NowYear = Number(date.split('-')[0])
 
+        // 判断是否为今天，如果是，则不可点击
+        let mm = new Date()
+        let D = mm.getDate()
+        let M = mm.getMonth() + 1
+        let Y = mm.getFullYear()
+        if (D === NowD && M === NowMon && Y === NowYear) {
+          return
+        }
+
         // 日期后一天
         let d = this.handleGetNumOfMonth(NowYear, NowMon)
         if (NowD === d) {
@@ -358,6 +367,61 @@ export default {
         let endMon = Number(date.split('/')[1].split('-')[1])
         let a = Number(date.split('/')[0].split('-')[2])
         let b = Number(date.split('/')[1].split('-')[2])
+
+        // 判断是否为当天所在周，如果是，则不可点击
+        let date1 = new Date()
+        let y = date1.getFullYear()
+        let m = date1.getMonth() + 1
+        let d = date1.getDate()
+        let dd = date1.getDay()
+        let start, end, m1, m2, y1, y2
+
+        if (d - dd < 0) {
+          if (m === 1) {
+            y1 = y - 1
+            y2 = y
+            m1 = 12
+            m2 = 1
+            start = 31 - Math.abs(d - dd + 1)
+            end = d - dd + 7
+          } else {
+            y1 = y
+            y2 = y
+            m1 = m - 1
+            m2 = m
+            let num = new Date(y, m1, 0).getDate()
+            start = num - Math.abs(d - dd + 1)
+            end = d - dd + 7
+          }
+        } else {
+          y1 = y
+          start = d - dd + 1
+          if (d - dd + 7 > 31) {
+            if (m === 12) {
+              y2 = y + 1
+              m1 = 12
+              m2 = 1
+              end = d - dd + 7 - 31
+            } else {
+              y2 = y
+              m1 = m
+              m2 = m + 1
+              let num = new Date(y, m, 0).getDate()
+              end = d - dd + 7 - num
+            }
+          } else {
+            y2 = y
+            m1 = m
+            m2 = m
+            end = d - dd + 7
+          }
+        }
+        
+        if (y1 === startYear && m1 === startMon &&
+          start === a && y2 === endYear && m2 === endMon &&
+          end === b) {
+          return
+        }
 
         if (a > b) {
           // 本周跨月，下周下一个月
@@ -439,6 +503,14 @@ export default {
         let NowYear = Number(date.split('-')[0])
         let NowMon = Number(date.split('-')[1])
 
+        // 判断是否为当年当月，如果是，则不可点击
+        let mm = new Date()
+        let M = mm.getMonth() + 1
+        let Y = mm.getFullYear()
+        if (M === NowMon && Y === NowYear) {
+          return
+        }
+
         if (NowMon === 12) {
           this.y1 = NowYear + 1
           this.m1 = 1
@@ -455,6 +527,13 @@ export default {
         // **********
         // 获取数据源
         let date = this.$store.state.showDate
+
+        // 判断是否为当年，如果是，则不可点击
+        let mm = new Date()
+        let Y = mm.getFullYear()
+        if (Y === date) {
+          return
+        }
         this.$store.state.showDate = Number(date) + 1
 
       }
@@ -508,8 +587,6 @@ export default {
     border-style: solid;
     -webkit-transform: matrix(0.71, 0.71, 0.71, -0.71, 0, 0);
     transform: matrix(0.71, 0.71, 0.71, -0.71, 0, 0);
-    position: relative;
-    top: -2px;
     position: absolute;
     top: 50%;
     margin-top: -16px;
@@ -519,8 +596,8 @@ export default {
     background-color: #f2f2f2;
   }
   .dateControl {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
     height: 100%;
     width: 70%;
     display: flex;
@@ -551,16 +628,15 @@ export default {
     border-style: solid;
     -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
     transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
-    position: relative;
-    top: -2px;
     position: absolute;
     top: 50%;
     margin-top: -4px;
-    right: 17px;
+    right: 15px;
   }
   .dateControl .btn-dateControl-left::after {
     -webkit-transform: matrix(-0.71, 0.71, 0.71, 0.71, 0, 0);
     transform: matrix(-0.71, 0.71, 0.71, 0.71, 0, 0);
+    left: 15px;
   }
   .changeDate {
     padding: 0 15px;

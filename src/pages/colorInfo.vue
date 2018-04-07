@@ -4,7 +4,7 @@
     <div class="segment showColorData-one-col">
       <div class="cell cell-1" style="margin-bottom:15px;">
         <div>
-          <h2>81190.<small>23</small></h2>
+          <h2>{{ aa }}</h2>
           <p>流水(元)</p>
         </div>
       </div>
@@ -66,6 +66,11 @@ export default {
   data () {
     return {
       isFixedBg: false
+    }
+  },
+  computed: {
+    aa () {
+      return this.$route.params.id
     }
   },
   methods: {
