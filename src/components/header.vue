@@ -371,57 +371,8 @@ export default {
         let b = Number(date.split('/')[1].split('-')[2])
 
         // 判断是否为当天所在周，如果是，则不可点击
-        let date1 = new Date()
-        let y = date1.getFullYear()
-        let m = date1.getMonth() + 1
-        let d = date1.getDate()
-        let dd = date1.getDay()
-        let start, end, m1, m2, y1, y2
-
-        if (d - dd < 0) {
-          if (m === 1) {
-            y1 = y - 1
-            y2 = y
-            m1 = 12
-            m2 = 1
-            start = 31 - Math.abs(d - dd + 1)
-            end = d - dd + 7
-          } else {
-            y1 = y
-            y2 = y
-            m1 = m - 1
-            m2 = m
-            let num = new Date(y, m1, 0).getDate()
-            start = num - Math.abs(d - dd + 1)
-            end = d - dd + 7
-          }
-        } else {
-          y1 = y
-          start = d - dd + 1
-          if (d - dd + 7 > 31) {
-            if (m === 12) {
-              y2 = y + 1
-              m1 = 12
-              m2 = 1
-              end = d - dd + 7 - 31
-            } else {
-              y2 = y
-              m1 = m
-              m2 = m + 1
-              let num = new Date(y, m, 0).getDate()
-              end = d - dd + 7 - num
-            }
-          } else {
-            y2 = y
-            m1 = m
-            m2 = m
-            end = d - dd + 7
-          }
-        }
-
-        if (y1 === startYear && m1 === startMon &&
-          start === a && y2 === endYear && m2 === endMon &&
-          end === b) {
+        this.$store.commit('getWeekDay')
+        if (this.$store.state.linshi === date) {
           return
         }
 

@@ -64,6 +64,7 @@ export default {
   .table-9 tr td {
     width: 30%;
     position: relative;
+    padding: 23px 0;
   }
   .table-9 tr td::after {
     content: '';
@@ -92,7 +93,6 @@ export default {
     flex-flow: column;
     justify-content: center;
     align-items: center;
-    height: 125px;
   }
   .table-9-cell img {
     width: 50px;

@@ -7,6 +7,7 @@ import Baobiao from '@/pages/baobiao'
 import Yonghu from '@/pages/yonghu'
 import UpdatePwd from '@/pages/updatePwd'
 import ColorInfo from '@/pages/colorInfo'
+import ColorInfoTab from '@/pages/colorInfoTab'
 
 Vue.use(Router)
 
@@ -53,6 +54,11 @@ export default new Router({
       path: '/colorInfo',
       name: 'colorInfo',
       component: ColorInfo
+    },
+    {
+      path: '/colorInfoTab',
+      name: 'colorInfoTab',
+      component: ColorInfoTab
     }
   ]
 })

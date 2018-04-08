@@ -4,6 +4,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    linshi: '',
     weekNum: '',
     showDate: '',
     selectedTitle: 1,
@@ -43,7 +44,7 @@ export default new Vuex.Store({
         state.weekNum = '五'
       } else if (day === 6) {
         state.weekNum = '六'
-      } else if (day === 7) {
+      } else if (day === 0) {
         state.weekNum = '日'
       }
     },
@@ -86,61 +87,8 @@ export default new Vuex.Store({
       state.showDate =  y + '-' + m + '-' + d + ' 星期' + _day
     },
     showWeek111 (state) {
-      let date = new Date()
-      let y = date.getFullYear()
-      let m = date.getMonth() + 1
-      let d = date.getDate()
-      let dd = date.getDay()
-      let start, end, m1, m2, y1, y2
-
-      if (d - dd < 0) {
-        if (m === 1) {
-          y1 = y - 1
-          y2 = y
-          m1 = 12
-          m2 = 1
-          start = 31 - Math.abs(d - dd + 1)
-          end = d - dd + 7
-        } else {
-          y1 = y
-          y2 = y
-          m1 = m - 1
-          m2 = m
-          let num = new Date(y, m1, 0).getDate()
-          start = num - Math.abs(d - dd + 1)
-          end = d - dd + 7
-        }
-      } else {
-        y1 = y
-        start = d - dd + 1
-        if (d - dd + 7 > 31) {
-          if (m === 12) {
-            y2 = y + 1
-            m1 = 12
-            m2 = 1
-            end = d - dd + 7 - 31
-          } else {
-            y2 = y
-            m1 = m
-            m2 = m + 1
-            let num = new Date(y, m, 0).getDate()
-            end = d - dd + 7 - num
-          }
-        } else {
-          y2 = y
-          m1 = m
-          m2 = m
-          end = d - dd + 7
-        }
-      }
-
-      start = start < 10 ? '0' + start : start
-      end = end < 10 ? '0' + end : end
-      m1 = m1 < 10 ? '0' + m1 : m1
-      m2 = m2 < 10 ? '0' + m2 : m2
-
-      let showWeek = y1+ '-' + m1 + '-' + start + '/' + y2 + '-' + m2 + '-' + end
-      state.showDate = showWeek
+      this.commit('getWeekDay')
+      state.showDate = state.linshi
     },
     showMonth111 (state) {
       let date = new Date()
@@ -153,6 +101,20 @@ export default new Vuex.Store({
       let date = new Date()
       let y = date.getFullYear()
       state.showDate = y
+    },
+    getWeekDay (state) {
+      // 1970-01-01到今天的毫秒数
+      const dateOfToday = Date.now()
+      // 1、2、3、4、5、6、0 转换成 0、1、2、3、4、5、6
+      const dayOfToday = (new Date().getDay() + 7 - 1) % 7
+      let daysOfThisWeek = Array.from(new Array(7))
+        .map((val, index) => {
+          const date = new Date(dateOfToday + (index - dayOfToday) * 1000 * 60 * 60 * 24)
+          return date.getFullYear() + '-' +
+            String(date.getMonth() + 1).padStart(2, '0') + '-' +
+            String(date.getDate()).padStart(2, '0')
+        })
+      state.linshi = daysOfThisWeek[0] + '/' + daysOfThisWeek[6]
     }
   },
   actions: {

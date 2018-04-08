@@ -5,7 +5,7 @@
 
       <div class="cell" :class="item.class"
         v-for="(item, index) in colorList" :key="index"
-        @click="goColorInfo(index)">
+        @click="goColorInfo(item)">
         <div>
           <h2>{{ item.data }}</h2>
           <p>{{ item.title }}</p>
@@ -30,7 +30,7 @@
     <div class="segment" style="padding:0;">
       <table class="table table-two-col">
         <tr>
-          <td>
+          <td @click="goColorInfoTab">
             <h2>77305.24</h2>
             <p>收款(元)</p>
           </td>
@@ -289,12 +289,14 @@ export default {
         {
           data: '12018.63',
           title: '未结金额(元)',
-          class: 'cell-5'
+          class: 'cell-5',
+          flag: 1
         },
         {
           data: '302/14',
           title: '已结/未结账单(元)',
-          class: 'cell-6'
+          class: 'cell-6',
+          flag: 1
         }
       ]
     }
@@ -313,39 +315,22 @@ export default {
     setFixedBg (val) {
       this.isFixedBg = val
     },
-    goColorInfo (index) {
-      if (index === 0) {
-        this.$router.push({
-          name: 'colorInfo',
-          params: { id: 999 }
-        })
-      } else if (index === 1) {
-        this.$router.push({
-          name: 'colorInfo',
-          params: { id: 111 }
-        })
-      } else if (index === 2) {
-        this.$router.push({
-          name: 'colorInfo',
-          params: { id: 222 }
-        })
-      } else if (index === 3) {
-        this.$router.push({
-          name: 'colorInfo',
-          params: { id: 333 }
-        })
-      } else if (index === 4) {
-        this.$router.push({
-          name: 'colorInfo',
-          params: { id: 444 }
-        })
-      } else if (index === 5) {
-        this.$router.push({
-          name: 'colorInfo',
-          params: { id: 555 }
-        })
+    goColorInfo (item) {
+      if (item.flag === 1) {
+        return
       }
-
+      let params = {
+        data: item.data,
+        title: item.title,
+        class: item.class
+      }
+      this.$router.push({
+        name: 'colorInfo',
+        query: params
+      })
+    },
+    goColorInfoTab () {
+      this.$router.push({name: 'colorInfoTab'})
     },
     handleChangeChart (index) {
       this.num = index

@@ -2,15 +2,21 @@
   <div :class="{fixedBg: isFixedBg}">
     <Header @setFixedBg="setFixedBg"></Header>
     <div class="segment showColorData-one-col">
-      <div class="cell" :class="theClass"
-        style="margin-bottom:15px;">
+      <div class="cell"
+        :class="[{'cell-1': item.id === 1},
+                 {'cell-3': item.id === 2},
+                 {active: index === num}]"
+        v-for="(item, index) in tabs" :key="index"
+        style="margin-bottom:15px;"
+        @click="handleChangeChart(index)">
         <div>
-          <h2>{{ theData }}</h2>
-          <p>{{ theTitle }}</p>
+          <h2>{{ item.data }}</h2>
+          <p>{{ item.title }}</p>
         </div>
       </div>
-      <!-- echarts -->
-      <div style="height:300px;width:100%;" id="echartId">
+      <div style="height:300px;width:100%;"
+        v-for="(item, index) in tabContents" :key="item.id"
+        :id="item.id" v-show="index === num">
       </div>
     </div>
 
@@ -66,26 +72,90 @@ export default {
   },
   data () {
     return {
-      isFixedBg: false
+      isFixedBg: false,
+      num: 0,
+      tabs: [
+        {
+          id: 1,
+          data: 111,
+          title: 111
+        },
+        {
+          id: 2,
+          data: 222,
+          title: 222
+        }
+      ],
+      tabContents: [
+        {
+          id: 'chart1',
+        },
+        {
+          id: 'chart2'
+        }
+      ],
     }
   },
   computed: {
-    theData () {
-      return this.$route.query.data
-    },
-    theTitle () {
-      return this.$route.query.title
-    },
-    theClass () {
-      return this.$route.query.class
+    // 初始化 chart 之后,
+    // 获取屏幕宽度赋值给 chart 的宽度
+    screenWidth () {
+      return window.innerWidth - 30
     }
   },
   methods: {
     setFixedBg (val) {
       this.isFixedBg = val
     },
-    showSerial () {
-      let myChartObj = document.getElementById('echartId')
+    handleChangeChart (index) {
+      this.num = index
+      if (index === 0) {
+        this.showChart1()
+      } else {
+        this.showChart2()
+      }
+    },
+    showChart1 () {
+      let myChartObj = document.getElementById('chart1')
+      let myChart = this.$echarts.init(myChartObj)
+      myChart.resize({
+        width: this.screenWidth
+      })
+      myChart.setOption({
+        tooltip: {
+          // trigger: 'axis' // 触发类型
+        },
+        grid: {
+          top: '0',
+          left: '0',
+          right: '0',
+          bottom: '0'
+        },
+        xAxis: {
+          type: 'category', // 坐标轴类型
+          boundaryGap: false, // 坐标轴两边留白策略
+          axisLabel:{
+            interval:0, // 横轴信息全部显示
+          }
+        },
+        yAxis: {
+        },
+        series: [
+          {
+            type: 'pie',
+            radius: ['50%', '70%']
+          }
+        ],
+        dataset: {
+          source: {
+            "value": ["银行卡类","现金类"],
+            "aa": [250, 750]
+          }
+        }
+      })
+    },
+    showChart2 () {
+      let myChartObj = document.getElementById('chart2')
       let myChart = this.$echarts.init(myChartObj)
       myChart.resize({
         width: this.screenWidth
@@ -115,9 +185,18 @@ export default {
           name: '单位:万元'
         },
         series: [
-          { type: 'line' },
-          { type: 'line' },
-          { type: 'line' }
+          {
+            type: 'pie',
+            radius: ['50%', '70%']
+          },
+          {
+            type: 'pie',
+            radius: ['50%', '70%']
+          },
+          {
+            type: 'pie',
+            radius: ['50%', '70%']
+          }
         ],
         dataset: {
           source: {
@@ -131,7 +210,7 @@ export default {
     }
   },
   mounted () {
-    this.showSerial()
+    this.showChart1()
   }
 }
 </script>
@@ -144,7 +223,7 @@ export default {
     margin-top: 80px;
   }
   .showColorData-one-col .cell {
-    width: 100%;
+    width: 49%;
   }
   .no1 {
     background: url('../assets/no1.png') no-repeat center center;
@@ -157,5 +236,11 @@ export default {
   .no3 {
     background: url('../assets/no3.png') no-repeat center center;
     background-size: 22px 26px;
+  }
+  .showColorData-one-col .active {
+    background-image: url(../assets/selection.png);
+    background-repeat: no-repeat;
+    background-position: 18px top;
+    background-size: 18px 22px;
   }
 </style>
