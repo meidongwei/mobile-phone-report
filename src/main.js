@@ -9,6 +9,8 @@ Vue.prototype.$echarts = echarts
 
 import store from './store/store'
 
+import mock from './mock/mock'
+
 
 Vue.config.productionTip = false
 /* eslint-disable no-new */
