@@ -18,40 +18,20 @@
       <!-- table -->
       <table class="table table-bordered">
         <tr class="active">
-          <td>排名</td>
-          <td>门店</td>
-          <td>流水(元)</td>
-          <td>占比</td>
+          <td v-for="(col, index) in columns1" :key="index">
+            {{ col.title }}
+          </td>
         </tr>
-        <tr>
-          <td class="no1"></td>
-          <td>中餐1店</td>
-          <td>2377.81</td>
-          <td>100.00%</td>
-        </tr>
-        <tr>
-          <td class="no2"></td>
-          <td>中餐1店</td>
-          <td>2377.81</td>
-          <td>100.00%</td>
-        </tr>
-        <tr>
-          <td class="no3"></td>
-          <td>中餐1店</td>
-          <td>2377.81</td>
-          <td>100.00%</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>中餐1店</td>
-          <td>2377.81</td>
-          <td>100.00%</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>中餐1店</td>
-          <td>2377.81</td>
-          <td>100.00%</td>
+        <tr v-for="(item, index) in data1" :key="index+1">
+          <td :class="[{no1: index === 0},{no2: index === 1},
+            {no3: index === 2}]">
+            <span v-if="index!==0 && index!==1 && index!== 2">
+              {{ index + 1 }}
+            </span>
+          </td>
+          <td>{{ item.mendian }}</td>
+          <td>{{ item.liushui }}</td>
+          <td>{{ item.zhanbi }}</td>
         </tr>
       </table>
     </div>
@@ -66,7 +46,36 @@ export default {
   },
   data () {
     return {
-      isFixedBg: false
+      isFixedBg: false,
+      columns1: [
+        {
+          title: '排名'
+        },
+        {
+          title: '门店',
+          key: 'mendian'
+        },
+        {
+          title: '流水(元)',
+          key: 'liushui'
+        },
+        {
+          title: '占比',
+          key: 'zhanbi'
+        }
+      ],
+      data1: [
+        {
+          mendian: '中餐1店',
+          liushui: 2377.81,
+          zhanbi: '12.5%'
+        },
+        {
+          mendian: '中餐1店',
+          liushui: 14266.86,
+          zhanbi: '75%'
+        }
+      ]
     }
   },
   computed: {
@@ -91,40 +100,96 @@ export default {
         width: this.screenWidth
       })
       myChart.setOption({
+        color: ['#33b89e','#2adcb9','#33b89e'],
+        title: {
+            text: '单位：万元',
+            textStyle: {
+                fontSize: 12,
+                fontWeight: 'normal',
+                color: '#999999',
+            }
+        },
+
         tooltip: {
-          trigger: 'axis' // 触发类型
         },
         legend: {
-          right: '0'
+        	x: 'right',
+        	itemWidth:12,  //图例标记的图形宽度
+            itemHeight:12, //图例标记的图形高度
+        	data: [{
+        		name : '实收',
+        		icon : 'rect' //ECharts 提供的标记类型包括 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow'
+        			},
+        			{
+                name : '优免',
+                icon : 'rect'
+        			}
+        	],
+        	textStyle: {
+                color: '#999999'
+            }
         },
-        grid: {
-          top: '33px',
-          left: '0',
-          right: '10',
-          bottom: '0',
-          containLabel: true // 是否包含坐标轴的刻度标签
+        grid:{
+          top: '10%',
+          left: '-1%',
+          right: '0',
+          containLabel: true,
+          bottom: 0
         },
+        toolbox: {
+            show : false,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+
+
         xAxis: {
-          type: 'category', // 坐标轴类型
-          boundaryGap: false, // 坐标轴两边留白策略
-          axisLabel:{
-            interval:0, // 横轴信息全部显示
+          type: 'category',
+          axisTick: {
+            show: false
+          },
+          axisLine: {
+          	lineStyle: {
+          		color: '#bbb',
+          	}
           }
         },
-        yAxis: {
-          name: '单位:万元'
-        },
-        series: [
-          { type: 'line' },
-          { type: 'line' },
-          { type: 'line' }
+        yAxis: [
+          {
+          	axisLine: {show: false},//不显示y轴
+          	type: 'value',
+      			axisTick:{
+      		    show:false //去掉刻度
+      			},
+      			splitLine: {
+            	show: true,
+            	lineStyle: {
+            		type: 'dotted' //分隔线的类型:solid dashed dotted
+            	}
+            },
+            axisLabel: {
+              textStyle: {
+                color: '#999999'
+              },
+              formatter: '', //不显示数值{value}
+            }
+          }
         ],
+
+        series: [{
+          // data: [120, 200],
+          type: 'bar',
+          barWidth: 30
+        }],
         dataset: {
           source: {
-            "value": ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
-            "去年完成": [125, 250, 590, 750, 580, 750, 600, 528, 522, 528, 600, 700],
-            "今年计划": [35, 130, 280, 250, 380, 430, 400, 328, 422, 328, 290, 100],
-            "今年完成": [15, 30, 100, 220, 280, 250, 290, 228, 222, 108, 20, 0]
+            "value": ["中餐1店","中餐2店"],
+            "实收": [125, 750]
           }
         }
       })

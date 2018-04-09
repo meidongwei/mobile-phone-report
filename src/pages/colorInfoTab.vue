@@ -24,40 +24,18 @@
       <!-- table -->
       <table class="table table-bordered">
         <tr class="active">
-          <td>排名</td>
-          <td>门店</td>
-          <td>流水(元)</td>
-          <td>占比</td>
+          <td v-for="col in columns1">{{ col.title }}</td>
         </tr>
-        <tr>
-          <td class="no1"></td>
-          <td>中餐1店</td>
-          <td>2377.81</td>
-          <td>100.00%</td>
-        </tr>
-        <tr>
-          <td class="no2"></td>
-          <td>中餐1店</td>
-          <td>2377.81</td>
-          <td>100.00%</td>
-        </tr>
-        <tr>
-          <td class="no3"></td>
-          <td>中餐1店</td>
-          <td>2377.81</td>
-          <td>100.00%</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>中餐1店</td>
-          <td>2377.81</td>
-          <td>100.00%</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>中餐1店</td>
-          <td>2377.81</td>
-          <td>100.00%</td>
+        <tr v-for="(item, index) in data1" :key="index+1">
+          <td :class="[{no1: index === 0},{no2: index === 1},
+            {no3: index === 2}]">
+            <span v-if="index!==0 && index!==1 && index!== 2">
+              {{ index + 1 }}
+            </span>
+          </td>
+          <td>{{ item.shoukuanleibie }}</td>
+          <td>{{ item.jine }}</td>
+          <td>{{ item.zhanbi }}</td>
         </tr>
       </table>
     </div>
@@ -94,6 +72,35 @@ export default {
           id: 'chart2'
         }
       ],
+      columns1: [
+        {
+          title: '排名'
+        },
+        {
+          title: '收款类别',
+          key: 'shoukuanleibie'
+        },
+        {
+          title: '金额(元)',
+          key: 'jine'
+        },
+        {
+          title: '占比',
+          key: 'zhanbi'
+        }
+      ],
+      data1: [
+        {
+          shoukuanleibie: '现金类',
+          jine: 2873.50,
+          zhanbi: '80.46%'
+        },
+        {
+          shoukuanleibie: '银行卡类',
+          jine: 698.00,
+          zhanbi: '19.54%'
+        }
+      ]
     }
   },
   computed: {
@@ -122,36 +129,53 @@ export default {
         width: this.screenWidth
       })
       myChart.setOption({
-        tooltip: {
-          // trigger: 'axis' // 触发类型
-        },
-        grid: {
-          top: '0',
-          left: '0',
-          right: '0',
-          bottom: '0'
-        },
-        xAxis: {
-          type: 'category', // 坐标轴类型
-          boundaryGap: false, // 坐标轴两边留白策略
-          axisLabel:{
-            interval:0, // 横轴信息全部显示
-          }
-        },
-        yAxis: {
+        tooltip : {
+          trigger: 'item',
+          formatter: "{a} <br/>{b} : {c} ({d}%)",
+          confine: true
         },
         series: [
           {
+            name: '收款类别',
             type: 'pie',
-            radius: ['50%', '70%']
+            radius: ['35%', '60%'],
+            labelLine: {
+              length: 20,
+              length2: 80,
+              // lineStyle: {
+              //   color: '#333'
+              // }
+            },
+            label: {
+              formatter: '{a|{d}%}\n{b|{b}}',
+              borderWidth: 0,
+              borderRadius: 4,
+              padding: [0, -50],
+              rich: {
+                a: {
+                  // color: '#333',
+                  // fontSize: 14,
+                  lineHeight: 20
+                },
+                hr: {
+                  // borderColor: '#333',
+                  width: '100%',
+                  borderWidth: 0.5,
+                  height: 0
+                },
+                b: {
+                  // fontSize: 14,
+                  lineHeight: 20,
+                  // color: '#333'
+                }
+              }
+            },
+            data: [
+              {value: 698, name:'银行卡类'},
+              {value: 2873.5, name:'现金类'}
+            ]
           }
-        ],
-        dataset: {
-          source: {
-            "value": ["银行卡类","现金类"],
-            "aa": [250, 750]
-          }
-        }
+        ]
       })
     },
     showChart2 () {
@@ -161,51 +185,22 @@ export default {
         width: this.screenWidth
       })
       myChart.setOption({
-        tooltip: {
-          trigger: 'axis' // 触发类型
-        },
-        legend: {
-          right: '0'
-        },
-        grid: {
-          top: '33px',
-          left: '0',
-          right: '10',
-          bottom: '0',
-          containLabel: true // 是否包含坐标轴的刻度标签
-        },
-        xAxis: {
-          type: 'category', // 坐标轴类型
-          boundaryGap: false, // 坐标轴两边留白策略
-          axisLabel:{
-            interval:0, // 横轴信息全部显示
-          }
-        },
-        yAxis: {
-          name: '单位:万元'
+        tooltip : {
+          trigger: 'item',
+          formatter: "{a} <br/>{b} : {c} ({d}%)",
+          confine: true
         },
         series: [
           {
+            name: '收款类别',
             type: 'pie',
-            radius: ['50%', '70%']
-          },
-          {
-            type: 'pie',
-            radius: ['50%', '70%']
-          },
-          {
-            type: 'pie',
-            radius: ['50%', '70%']
+            radius: ['35%', '60%'],
+            data:[
+              {value: 6, name:'银行卡类'},
+              {value: 12, name:'现金类'}
+            ]
           }
-        ],
-        dataset: {
-          source: {
-            "value": ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
-            "去年完成": [125, 250, 590, 750, 580, 750, 600, 528, 522, 528, 600, 700],
-            "今年计划": [35, 130, 280, 250, 380, 430, 400, 328, 422, 328, 290, 100],
-            "今年完成": [15, 30, 100, 220, 280, 250, 290, 228, 222, 108, 20, 0]
-          }
-        }
+        ]
       })
     }
   },
